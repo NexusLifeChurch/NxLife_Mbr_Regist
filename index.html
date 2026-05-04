@@ -16,72 +16,74 @@
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Prompt', sans-serif; }
         body { background-color: var(--bg-color); color: var(--text-main); }
         
-        /* 2. แก้ไข Banner ให้ใช้ <img> เพื่อภาพเต็มใบ */
+        /* Banner Responsive: เห็นภาพเต็ม 100% */
         .banner-container {
             width: 100%; overflow: hidden;
-            border-bottom-left-radius: 15px; border-bottom-right-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
             background: #fff;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         }
         .banner-container img {
             width: 100%; height: auto; display: block;
+            object-fit: contain;
         }
 
-        .container { max-width: 600px; margin: -50px auto 20px; padding: 0 15px; position: relative; }
+        .container { max-width: 600px; margin: -40px auto 20px; padding: 0 15px; position: relative; }
 
         .floating-intro {
             background: #FFFFFF; border-radius: 20px; padding: 25px;
             text-align: center; box-shadow: 0 8px 25px rgba(0,0,0,0.08); margin-bottom: 25px;
         }
-        .floating-intro h1 { font-size: 1.4rem; color: var(--accent-gold); margin-bottom: 15px; font-weight: 600; }
-        .floating-intro p { font-size: 0.95rem; color: #444; line-height: 1.8; white-space: pre-line; }
+        .floating-intro h1 { font-size: 1.3rem; color: var(--accent-gold); margin-bottom: 12px; font-weight: 600; }
+        .floating-intro p { font-size: 0.9rem; color: #444; line-height: 1.7; white-space: pre-line; }
 
         .form-card {
-            background: #FFFFFF; border-radius: 20px; padding: 25px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 25px;
+            background: #FFFFFF; border-radius: 20px; padding: 22px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 22px;
         }
         .card-title { 
-            font-size: 1.1rem; color: var(--accent-gold); margin-bottom: 20px; 
+            font-size: 1.05rem; color: var(--accent-gold); margin-bottom: 18px; 
             border-left: 5px solid var(--accent-gold); padding-left: 12px; font-weight: 600;
         }
 
-        .form-group { margin-bottom: 20px; }
-        label { display: block; font-weight: 600; margin-bottom: 8px; font-size: 0.95rem; color: var(--primary-dark); }
-        .hint-box { font-size: 0.8rem; color: #666; margin-bottom: 12px; background: #fafafa; padding: 10px; border-radius: 8px; line-height: 1.5; border-left: 3px solid #eee; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; font-weight: 600; margin-bottom: 6px; font-size: 0.9rem; color: var(--primary-dark); }
+        .hint-box { font-size: 0.75rem; color: #666; margin-bottom: 10px; background: #fafafa; padding: 10px; border-radius: 8px; line-height: 1.4; border-left: 3px solid #eee; }
         
         input, select, textarea {
-            width: 100%; padding: 12px 15px; border: 1px solid var(--border-color);
+            width: 100%; padding: 11px 14px; border: 1px solid var(--border-color);
             border-radius: 10px; font-size: 0.95rem; background: #fff;
         }
         input:focus, textarea:focus { outline: none; border-color: var(--accent-gold); border-width: 2px; }
 
-        .radio-btn-group { display: flex; gap: 10px; }
-        .radio-btn { flex: 1; position: relative; }
+        .radio-btn-group { display: flex; gap: 8px; }
+        .radio-btn { flex: 1; }
         .radio-btn input { display: none; }
-        .radio-btn label { display: block; padding: 12px; border: 1px solid var(--border-color); border-radius: 10px; text-align: center; cursor: pointer; }
+        .radio-btn label { display: block; padding: 11px; border: 1px solid var(--border-color); border-radius: 10px; text-align: center; cursor: pointer; font-size: 0.9rem; }
         .radio-btn input:checked + label { background: var(--accent-gold); color: white; border-color: var(--accent-gold); }
 
-        .check-group { display: flex; flex-direction: column; gap: 10px; margin-top: 5px; }
-        .check-item { display: flex; align-items: flex-start; gap: 10px; cursor: pointer; padding: 8px; border-radius: 8px; font-size: 0.95rem; }
-        .check-item input[type="checkbox"] { margin-top: 4px; width: 18px; height: 18px; flex-shrink: 0; }
+        /* ปรับปรุง Check-group ให้กระชับ (Compact) */
+        .check-group { display: flex; flex-direction: column; gap: 2px; margin-top: 5px; }
+        .check-item { display: flex; align-items: flex-start; gap: 10px; cursor: pointer; padding: 4px 6px; border-radius: 6px; font-size: 0.88rem; transition: 0.2s; }
+        .check-item:hover { background: #fdfaf5; }
+        .check-item input[type="checkbox"] { margin-top: 2px; width: 16px; height: 16px; flex-shrink: 0; }
 
-        .upload-area { border: 2px dashed var(--border-color); border-radius: 12px; padding: 30px; text-align: center; cursor: pointer; }
-        #preview { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; display: none; margin: 15px auto; border: 4px solid #fff; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .upload-area { border: 2px dashed var(--border-color); border-radius: 12px; padding: 25px; text-align: center; cursor: pointer; }
+        #preview { width: 110px; height: 110px; border-radius: 50%; object-fit: cover; display: none; margin: 12px auto; border: 3px solid #fff; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
 
         .submit-section { text-align: center; margin-top: 20px; padding: 0 10px; }
-        .submit-note { font-size: 0.9rem; color: #666; line-height: 1.6; margin-bottom: 20px; white-space: pre-line; font-style: italic; }
+        .submit-note { font-size: 0.85rem; color: #666; line-height: 1.6; margin-bottom: 20px; white-space: pre-line; font-style: italic; }
 
         .btn-submit {
             width: 100%; background: linear-gradient(135deg, #B8860B, #8B6508);
-            color: #FFF; border: none; padding: 20px; font-size: 1.15rem; font-weight: 600;
+            color: #FFF; border: none; padding: 18px; font-size: 1.1rem; font-weight: 600;
             border-radius: 15px; cursor: pointer; box-shadow: 0 4px 15px rgba(184, 134, 11, 0.3);
         }
 
         #success-screen { display: none; text-align: center; animation: fadeIn 0.8s ease-out; }
-        .success-logo { width: 140px; margin-bottom: 25px; animation: pulse 2.5s infinite ease-in-out; }
+        .success-logo { width: 130px; margin-bottom: 25px; animation: pulse 2.5s infinite ease-in-out; }
         @keyframes pulse { 0%, 100% {transform: scale(1);} 50% {transform: scale(1.08);} }
         @keyframes fadeIn { from {opacity: 0; transform: translateY(20px);} to {opacity: 1; transform: translateY(0);} }
-        .footer-text { text-align: center; font-size: 0.75rem; color: #9B9288; margin-top: 15px; margin-bottom: 30px; }
+        .footer-text { text-align: center; font-size: 0.7rem; color: #9B9288; margin-top: 15px; margin-bottom: 30px; }
     </style>
 </head>
 <body>
@@ -149,10 +151,10 @@
                 </div>
                 <div class="form-group">
                     <label>ที่อยู่สำหรับส่งเอกสาร/ของรางวัล *</label>
-                    <textarea id="shippingAddress" rows="5" placeholder="🚚 กรุณาระบุที่อยู่ให้ชัดเจน สำหรับใช้ในการจัดส่ง ของขวัญ, ของรางวัล หรือเอกสารต่างๆ ทาง ไปรษณีย์/Kerry 🎁📌&#10;&#10;โปรดระบุให้ครบถ้วน:&#10;บ้านเลขที่, หมู่บ้าน/อาคาร&#10;ถนน, แขวง/ตำบล, เขต/อำเภอ&#10;จังหวัด, รหัสไปรษณีย์" required oninvalid="this.setCustomValidity('ระบุข้อความในช่องนี้ด้วยนะคะ')" oninput="this.setCustomValidity('')"></textarea>
+                    <textarea id="shippingAddress" rows="4" placeholder="🚚 ระบุที่อยู่ให้ชัดเจน (บ้านเลขที่, ถนน, ตำบล, อำเภอ, จังหวัด, รหัสไปรษณีย์) สำหรับจัดส่งของรางวัล 🎁" required oninvalid="this.setCustomValidity('ระบุข้อความในช่องนี้ด้วยนะคะ')" oninput="this.setCustomValidity('')"></textarea>
                 </div>
                 <div class="form-group">
-                    <label>เบอร์โทรสำหรับพนักงานส่งพัสดุ *</label>
+                    <label>เบอร์โทรสำหรับขนส่งพัสดุ *</label>
                     <input type="tel" id="shippingPhone" placeholder="000-000-0000" class="phone-format" required oninvalid="this.setCustomValidity('ระบุข้อความในช่องนี้ด้วยนะคะ')" oninput="this.setCustomValidity('')">
                 </div>
             </div>
@@ -161,11 +163,11 @@
                 <div class="card-title">💛 เรื่องราวความเชื่อ</div>
                 <div class="form-group">
                     <label>คุณเป็นคริสเตียนแล้วหรือยังคะ? ✨</label>
-                    <textarea id="believeDate" rows="5" required placeholder="❌ ถ้า ยังไม่ได้เป็นคริสเตียน รบกวนระบุว่า &quot;ยังไม่ได้เป็นคริสเตียน&quot;&#10;✅ ถ้า เป็นคริสเตียนแล้ว รบกวนระบุวันที่ที่คุณ ตัดสินใจต้อนรับพระเยซูคริสต์เป็นพระผู้ช่วยให้รอด เท่าที่จำได้นะคะ/ครับ&#10; (เช่น “ปี 2020” หรือ “ตอนอยู่ ม.5”)" oninvalid="this.setCustomValidity('ระบุข้อความในช่องนี้ด้วยนะคะ')" oninput="this.setCustomValidity('')"></textarea>
+                    <textarea id="believeDate" rows="4" required placeholder="❌ ถ้า ยังไม่ได้เป็นคริสเตียน รบกวนระบุว่า &quot;ยังไม่ได้เป็นคริสเตียน&quot;&#10;✅ ถ้า เป็นคริสเตียนแล้ว รบกวนระบุวันที่ที่คุณ ตัดสินใจต้อนรับพระเยซูคริสต์...&#10; (เช่น “ปี 2020” หรือ “ตอนอยู่ ม.5”)" oninvalid="this.setCustomValidity('ระบุข้อความในช่องนี้ด้วยนะคะ')" oninput="this.setCustomValidity('')"></textarea>
                 </div>
                 <div class="form-group">
                     <label>ได้รับบัพติสมาในน้ำแล้วหรือยังคะ? 💧</label>
-                    <textarea id="baptismDate" rows="5" required placeholder="❌ ถ้า ยังไม่ได้รับบัพติสมา ให้ตอบว่า &quot;ยังไม่ได้รับ&quot;&#10;✅ ถ้า เคยรับบัพติสมาแล้ว รบกวนระบุ วันที่หรือช่วงเวลาที่รับ (เท่าที่จำได้) นะคะ/ครับ 🙏&#10; (เช่น “ปี 2021” หรือ “วันที่ 10 ต.ค. 2020”)" oninvalid="this.setCustomValidity('ระบุข้อความในช่องนี้ด้วยนะคะ')" oninput="this.setCustomValidity('')"></textarea>
+                    <textarea id="baptismDate" rows="4" required placeholder="❌ ถ้า ยังไม่ได้รับบัพติสมา ให้ตอบว่า &quot;ยังไม่ได้รับ&quot;&#10;✅ ถ้า เคยรับบัพติสมาแล้ว รบกวนระบุ วันที่หรือช่วงเวลาที่รับ...&#10; (เช่น “ปี 2021” หรือ “วันที่ 10 ต.ค. 2020”)" oninvalid="this.setCustomValidity('ระบุข้อความในช่องนี้ด้วยนะคะ')" oninput="this.setCustomValidity('')"></textarea>
                 </div>
                 <div class="form-group">
                     <label>คริสตจักรที่เป็นสมาชิกอยู่</label>
@@ -174,12 +176,8 @@
                 <div class="form-group">
                     <label>รู้จัก Nexus Life ผ่านทางช่องทางใด *</label>
                     <div class="hint-box">
-                        💻 สื่อออนไลน์ – Facebook, YouTube, TikTok ฯลฯ<br>
-                        👩 สายสัมพันธ์ Nexus – เพื่อน, พี่น้อง ใน Nexus<br>
-                        👩 สายสัมพันธ์ อื่น – เพื่อน, พี่น้อง, ญาติมิตร ฯลฯ<br>
-                        🏦 พันธมิตร – CGN, Jesus.net, Realfriend ฯลฯ<br>
-                        🎓 กลุ่ม Alpha – หลักสูตร Alpha<br>
-                        📝 อื่นๆ – งานสัมมนา, กิจกรรมอาสาสมัคร ฯลฯ
+                        💻 สื่อออนไลน์ | 👩 สายสัมพันธ์ Nexus | 👩 สายสัมพันธ์ อื่น<br>
+                        🏦 พันธมิตร | 🎓 กลุ่ม Alpha | 📝 อื่นๆ
                     </div>
                     <select id="sourceChannel" required oninvalid="this.setCustomValidity('ระบุข้อความในช่องนี้ด้วยนะคะ')" oninput="this.setCustomValidity('')">
                         <option value="">กรุณาเลือกช่องทาง</option>
@@ -196,13 +194,13 @@
                     <div class="check-group">
                         <label class="check-item"><input type="checkbox" name="interest" value="อยากรู้จักพระเจ้า"> อยากรู้จักพระเจ้า</label>
                         <label class="check-item"><input type="checkbox" name="interest" value="ต้องการคำอธิษฐานเผื่อ"> ต้องการคำอธิษฐานเผื่อ</label>
-                        <label class="check-item"><input type="checkbox" name="interest" value="ต้องการคำปรึกษาคำแนะนำด้านจิตวิญญาณหรือชีวิต"> ต้องการคำปรึกษาคำแนะนำด้านจิตวิญญาณหรือชีวิต</label>
-                        <label class="check-item"><input type="checkbox" name="interest" value="รู้จักพระเจ้ามานานแล้วแต่อยากเติบโตหรือเริ่มต้นใหม่"> รู้จักพระเจ้ามานานแล้วแต่อยากเติบโตหรือเริ่มต้นใหม่</label>
+                        <label class="check-item"><input type="checkbox" name="interest" value="ต้องการคำปรึกษาคำแนะนำด้านจิตวิญญาณหรือชีวิต"> ต้องการคำปรึกษาคำแนะนำ</label>
+                        <label class="check-item"><input type="checkbox" name="interest" value="รู้จักพระเจ้ามานานแล้วแต่อยากเติบโตหรือเริ่มต้นใหม่"> อยากเติบโตหรือเริ่มต้นใหม่</label>
                         <label class="check-item"><input type="checkbox" name="interest" value="เข้าร่วมกิจกรรม Alpha"> เข้าร่วมกิจกรรม Alpha</label>
                         <label class="check-item"><input type="checkbox" name="interest" value="เข้าร่วมกลุ่ม Care"> เข้าร่วมกลุ่ม Care</label>
                         <label class="check-item"><input type="checkbox" name="interest" value="เข้าร่วมโบสถ์ออนไลน์"> เข้าร่วมโบสถ์ออนไลน์</label>
                         <label class="check-item"><input type="checkbox" name="interest" value="อยากเรียนพระคัมภีร์ ออนไลน์"> อยากเรียนพระคัมภีร์ ออนไลน์</label>
-                        <label class="check-item"><input type="checkbox" name="interest" value="อยากช่วยสนับสนุนงานคริสตจักร"> อยากช่วยสนับสนุนงานคริสตจักร</label>
+                        <label class="check-item"><input type="checkbox" name="interest" value="อยากช่วยสนับสนุนงานคริสตจักร"> อยากสนับสนุนงานคริสตจักร</label>
                         <label class="check-item"><input type="checkbox" name="interest" value="อื่นๆ"> อื่นๆ</label>
                     </div>
                 </div>
@@ -211,7 +209,6 @@
             <div class="form-card">
                 <div class="card-title">📸 แนบรูปภาพ Profile</div>
                 <div class="form-group">
-                    <label>รูปภาพแทนตัวของคุณ</label>
                     <div class="upload-area" onclick="document.getElementById('fileInput').click()">
                         <span id="uploadText">📸 แตะเพื่อแนบรูปภาพ หรือถ่ายรูป</span>
                         <img id="preview">
@@ -229,14 +226,14 @@
             </div>
         </form>
         
-        <div class="footer-text">Form v1.06 Create By NxLife DBMS+</div>
+        <div class="footer-text">Form v1.07 Create By NxLife DBMS+</div>
     </div>
 
     <div class="container" id="success-screen">
         <div class="floating-intro">
             <img src="https://github.com/NexusLifeChurch/NxLife_Mbr_Regist/blob/main/images/Logo/life_logo.png?raw=true" class="success-logo">
-            <h2 style="color: var(--accent-gold); margin-bottom: 20px;">🌿 ขอต้อนรับสู่ครอบครัว Nexus Life 🌿</h2>
-            <p style="font-size: 1.1rem; color: var(--primary-dark); font-weight: 500; line-height: 1.8; text-align: center;">
+            <h2 style="color: var(--accent-gold); margin-bottom: 15px;">🌿 ขอต้อนรับสู่ครอบครัว Nexus Life 🌿</h2>
+            <p style="font-size: 1.05rem; color: var(--primary-dark); font-weight: 500; line-height: 1.8; text-align: center;">
                 เรื่องราวความทรงจำ
                 ระหว่าง <strong>“ท่านกับพระเจ้า และพวกเรา”</strong>
                 ได้เริ่มต้นขึ้นแล้ว!! ✨💛<br><br>
@@ -247,7 +244,7 @@
                 หรือหัวหน้าแคร์ของท่านได้เลยจ้า 😊🙏
             </p>
         </div>
-        <div class="footer-text">Form v1.06 Create By NxLife DBMS+</div>
+        <div class="footer-text">Form v1.07 Create By NxLife DBMS+</div>
     </div>
 
     <script>
