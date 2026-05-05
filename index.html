@@ -26,8 +26,6 @@
         
         .floating-intro { background: #FFFFFF; border-radius: 12px; padding: 30px 22px; text-align: center; box-shadow: 0 8px 25px rgba(0,0,0,0.08); margin-bottom: 25px; }
         .intro-logo { width: 90px; height: auto; margin: 0 auto 15px; display: block; }
-        
-        /* 🎯 แอนิเมชันให้โลโก้เต้นช้าๆ กลับมาแล้วครับ */
         .pulse-logo { animation: pulse 2.5s infinite ease-in-out; }
         @keyframes pulse { 0%, 100% {transform: scale(1);} 50% {transform: scale(1.08);} }
 
@@ -61,17 +59,29 @@
         
         .upload-area { border: 2px dashed var(--input-border); border-radius: 8px; padding: 25px; text-align: center; cursor: pointer; background: var(--input-bg); transition: 0.3s; }
         .upload-area:hover { border-color: var(--input-focus); background: #FFF3E0; }
-        #preview { width: 110px; height: 110px; border-radius: 50%; object-fit: cover; display: none; margin: 12px auto; border: 3px solid #fff; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        
+        /* 🎯 เปลี่ยนดีไซน์ Preview รูปเป็นสี่เหลี่ยมขอบมน + ขอบขาว */
+        #preview { 
+            width: 140px; 
+            height: 140px; 
+            border-radius: 16px; 
+            object-fit: cover; 
+            display: none; 
+            margin: 12px auto; 
+            border: 4px solid #ffffff; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.12); 
+        }
         
         .submit-section { text-align: center; margin-top: 20px; padding: 0 10px; }
         .submit-note { font-size: 0.85rem; color: #777; line-height: 1.6; margin-bottom: 20px; white-space: pre-line; font-style: italic; }
         .btn-submit { width: 100%; background: linear-gradient(135deg, var(--input-focus), #873600); color: #FFF; border: none; padding: 18px; font-size: 1.05rem; font-weight: 600; border-radius: 12px; cursor: pointer; box-shadow: 0 4px 15px rgba(211, 84, 0, 0.25); transition: 0.2s; }
         .btn-submit:active { transform: scale(0.98); }
+        .btn-submit:disabled { background: #ccc; box-shadow: none; cursor: not-allowed; }
         
         #success-screen { display: none; text-align: center; animation: fadeIn 0.6s ease-out; }
         .success-logo { width: 120px; margin-bottom: 20px; }
         @keyframes fadeIn { from {opacity: 0; transform: translateY(15px);} to {opacity: 1; transform: translateY(0);} }
-        .footer-text { text-align: center; font-size: 0.7rem; color: #9B9288; margin-top: 15px; margin-bottom: 30px; }
+        .footer-text { text-align: center; font-size: 0.75rem; color: #9B9288; margin-top: 15px; margin-bottom: 30px; font-weight: 500; }
     </style>
 </head>
 <body>
@@ -79,7 +89,6 @@
     <div class="container" id="form-container">
         
         <div class="floating-intro">
-            <!-- 🎯 คลาส pulse-logo เพื่อให้โลโก้เต้นช้าๆ -->
             <img src="https://github.com/NexusLifeChurch/NxLife_Mbr_Regist/blob/main/images/Logo/life_logo.png?raw=true" alt="Logo" class="intro-logo pulse-logo">
             <div class="intro-sub">✨เพราะพระเจ้าทรงนำ เราจึงได้พบกัน✨</div>
             <h1>🌿ลงทะเบียน Nexus Life🌿</h1>
@@ -196,13 +205,12 @@
                 <button type="submit" class="btn-submit" id="submitBtn">✨ส่งความรักและลงทะเบียน</button>
             </div>
         </form>
-        <div class="footer-text">NxLife CRM Create By System Designer</div>
+        <div class="footer-text">Form Register Version 2.2.1 By NxLife_DBMS+</div>
     </div>
 
     <!-- 🎉 Success Screen -->
     <div class="container" id="success-screen">
         <div class="floating-intro">
-            <!-- 🎯 คลาส pulse-logo หน้า Success -->
             <img src="https://github.com/NexusLifeChurch/NxLife_Mbr_Regist/blob/main/images/Logo/life_logo.png?raw=true" class="success-logo pulse-logo">
             <h2 style="color: var(--accent-gold); margin-bottom: 12px; font-size: 1.3rem;">🌿 ขอต้อนรับสู่ครอบครัว Nexus Life 🌿</h2>
             <p style="font-size: 1rem; color: var(--primary-dark); font-weight: 500; line-height: 1.8; text-align: center;">
@@ -210,7 +218,7 @@
                 หากท่านต้องการสอบถาม หรือมีข้อเสนอแนะ<br>สามารถติดต่อผู้แนะนำหรือหัวหน้าแคร์ได้เลยจ้า 😊🙏
             </p>
         </div>
-        <div class="footer-text">NxLife CRM Create By System Designer</div>
+        <div class="footer-text">Form Register Version 2.2.1 By NxLife_DBMS+</div>
     </div>
 
     <script>
@@ -232,11 +240,15 @@
             document.getElementById('otherInterestInput').style.display = this.checked ? 'block' : 'none';
         });
 
-        // 🎯 [ระบบบีบอัดรูปภาพ] Resize รูปให้เล็กลงก่อนส่ง ป้องกัน Data หายหรือ Timeout
+        // 🎯 อัปเกรด Image Compressor: ตัด header ส่วนเกินของ base64 ที่ทำให้ GAS เออเร่อออกไป
         document.getElementById('fileInput').addEventListener('change', e => { 
             const f = e.target.files[0]; 
             if (f) { 
-                mimeType = f.type; 
+                const btn = document.getElementById('submitBtn');
+                btn.disabled = true; // ล็อกปุ่มกันกดย้ำตอนรูปกำลังย่อ
+                btn.innerText = "กำลังประมวลผลรูปภาพ... ⏳";
+                
+                mimeType = 'image/jpeg'; // บังคับเซฟเป็น JPEG ให้ไฟล์เล็กสุด
                 const reader = new FileReader(); 
                 reader.readAsDataURL(f);
                 reader.onload = ev => { 
@@ -244,21 +256,25 @@
                     img.src = ev.target.result;
                     img.onload = () => {
                         const canvas = document.createElement('canvas');
-                        const MAX_WIDTH = 800; // ย่อขนาดไม่เกิน 800px
-                        const scaleSize = MAX_WIDTH / img.width;
-                        canvas.width = MAX_WIDTH;
+                        const MAX_WIDTH = 800; // ลดขนาดความกว้าง
+                        let scaleSize = 1;
+                        if (img.width > MAX_WIDTH) { scaleSize = MAX_WIDTH / img.width; }
+                        canvas.width = img.width * scaleSize;
                         canvas.height = img.height * scaleSize;
                         
                         const ctx = canvas.getContext('2d');
                         ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
                         
-                        // แปลงเป็น JPEG แบบบีบอัด 70%
                         const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.7);
-                        base64String = compressedDataUrl.split(',')[1]; 
+                        // ดึงข้อมูล Base64 เฉพาะเนื้อไฟล์เพียวๆ
+                        base64String = compressedDataUrl.replace(/^data:image\/(png|jpeg|webp);base64,/, "");
                         
                         document.getElementById('preview').src = compressedDataUrl; 
                         document.getElementById('preview').style.display = 'block'; 
                         document.getElementById('uploadText').style.display = 'none'; 
+                        
+                        btn.disabled = false;
+                        btn.innerText = "✨ส่งความรักและลงทะเบียน";
                     }
                 }; 
             } 
@@ -288,7 +304,7 @@
                 gender: document.querySelector('input[name="gender"]:checked').value, 
                 birthDate: document.getElementById('birthDate').value, 
                 profileBase64: base64String, 
-                mimeType: mimeType || 'image/jpeg', // Force MIME
+                mimeType: mimeType || 'image/jpeg',
                 believeDate: document.getElementById('believeDate').value, 
                 baptismDate: document.getElementById('baptismDate').value, 
                 oldChurch: document.getElementById('oldChurch').value, 
@@ -304,7 +320,6 @@
 
             const scriptURL = 'https://script.google.com/macros/s/AKfycbwZvScT487zNtNHIRbkBbSV1bklJqx2plme0bcJKyo24KmFQbe1SS0lUFFQbmgZo8zWjw/exec';
 
-            // 🎯 ใส่ headers: text/plain ช่วยลดปัญหา Google Block Payload
             fetch(scriptURL, { 
                 method: 'POST', 
                 body: JSON.stringify(payload),
