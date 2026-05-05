@@ -3,16 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- เปลี่ยน Title ตามคำขอ -->
     <title>NexusLife Community</title>
     <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
         :root { 
-            --bg-color: #F8F6F0; /* ปรับสีพื้นให้สว่างขึ้นนิดนึงเพื่อตัดกับ Card */
+            --bg-color: #F8F6F0; 
             --primary-dark: #2C241E; 
             --accent-gold: #B8860B; 
             --text-main: #333333; 
             --border-color: #D1C7B7;
-            --alert-color: #D35400; /* สีแจ้งเตือนเด่นชัดแต่ดูหรูหรา */
+            --alert-color: #D35400; 
         }
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Prompt', sans-serif; }
         body { background-color: var(--bg-color); color: var(--text-main); }
@@ -20,10 +21,8 @@
         .banner-container { width: 100%; overflow: hidden; background: #fff; box-shadow: 0 4px 15px rgba(0,0,0,0.08); }
         .banner-container img { width: 100%; height: auto; display: block; object-fit: contain; }
         
-        /* 1. ลดการทับ Banner เหลือแค่ขอบๆ (margin-top: -15px) */
         .container { max-width: 600px; margin: -15px auto 20px; padding: 0 15px; position: relative; z-index: 10; }
         
-        /* ลดความโค้งมนลงให้ดู Premium ขึ้น */
         .floating-intro { background: #FFFFFF; border-radius: 12px; padding: 22px; text-align: center; box-shadow: 0 8px 25px rgba(0,0,0,0.08); margin-bottom: 25px; }
         .floating-intro h1 { font-size: 1.25rem; color: var(--accent-gold); margin-bottom: 12px; font-weight: 600; }
         .floating-intro p { font-size: 0.9rem; color: #555; line-height: 1.7; white-space: pre-line; }
@@ -34,13 +33,11 @@
         .form-group { margin-bottom: 18px; }
         label { display: block; font-weight: 500; margin-bottom: 6px; font-size: 0.9rem; color: var(--primary-dark); }
         
-        /* 6. Hint-box สำหรับคำอธิบายยาวๆ ให้ตัวเล็กลง */
-        .hint-box { font-size: 0.75rem; color: #666; margin-bottom: 10px; background: #fafafa; padding: 10px; border-radius: 8px; line-height: 1.5; border-left: 3px solid #eee; }
-        .hint-box.small { font-size: 0.7rem; }
+        .hint-box { font-size: 0.8rem; color: #555; margin-bottom: 10px; background: #fafafa; padding: 10px; border-radius: 8px; line-height: 1.5; border-left: 3px solid #eee; }
+        .hint-box.small { font-size: 0.75rem; }
         
         input, select, textarea { width: 100%; padding: 12px 14px; border: 1px solid var(--border-color); border-radius: 8px; font-size: 0.9rem; background: #fff; transition: all 0.3s ease; color: var(--primary-dark); }
         
-        /* 2. สีแจ้งเตือนเวลา Focus หรือมี Error ให้เด่นชัดและดูสวย */
         input:focus, textarea:focus { outline: none; border-color: var(--accent-gold); box-shadow: 0 0 0 3px rgba(184, 134, 11, 0.1); }
         input:invalid:not(:placeholder-shown), textarea:invalid:not(:placeholder-shown) { border-color: var(--alert-color); }
         
@@ -93,7 +90,6 @@
                     <div class="radio-btn"><input type="radio" name="gender" value="ชาย" id="m" required><label for="m">ชาย</label></div>
                     <div class="radio-btn"><input type="radio" name="gender" value="หญิง" id="f"><label for="f">หญิง</label></div>
                 </div></div>
-                <!-- 3. วันเดือนปีเกิด & Placeholder แบบเทคนิค JS -->
                 <div class="form-group">
                     <label>วันเดือนปีเกิด *</label>
                     <input type="text" id="birthDate" placeholder="กดเพื่อใช้ตัวช่วยระบุวันที่" onfocus="(this.type='date')" onblur="(this.value==''?this.type='text':this.type='date')" required>
@@ -114,19 +110,27 @@
             <!-- 💛 เรื่องราวความเชื่อ -->
             <div class="form-card">
                 <div class="card-title">💛 เรื่องราวความเชื่อ</div>
-                <!-- 4. แก้ไข Placeholder คุณเป็นคริสเตียน -->
+                <!-- ดึงคำอธิบายออกมาไว้ด้านนอก และลดขนาดกล่องลงเหลือ rows="2" -->
                 <div class="form-group">
                     <label>คุณเป็นคริสเตียนแล้วหรือยังคะ? ✨</label>
-                    <textarea id="believeDate" rows="5" placeholder="❌ ถ้ายังไม่ได้เป็นคริสเตียน....&#10;รบกวนระบุว่า ยังไม่ได้เป็นคริสเตียน&#10;&#10;✅ ถ้าเป็นคริสเตียนแล้ว...&#10;ให้ระบุวันที่รับเชื่อ (ถ้าจำไม่ได้แน่นอน ให้ระบุช่วงเวลาก็ได้ค่ะ เช่น “ปี 2020” หรือ “ตอนอยู่ ม.5)" required></textarea>
+                    <div class="hint-box small">
+                        ❌ ถ้ายังไม่ได้เป็นคริสเตียน... รบกวนระบุว่า "ยังไม่ได้เป็นคริสเตียน"<br><br>
+                        ✅ ถ้าเป็นคริสเตียนแล้ว... ให้ระบุวันที่รับเชื่อ (ถ้าจำไม่ได้แน่นอน ให้ระบุช่วงเวลาก็ได้ค่ะ เช่น “ปี 2020” หรือ “ตอนอยู่ ม.5")
+                    </div>
+                    <textarea id="believeDate" rows="2" required></textarea>
                 </div>
-                <!-- 5. แก้ไข Placeholder บัพติสมา -->
+
                 <div class="form-group">
                     <label>ได้รับบัพติสมาในน้ำแล้วหรือยังคะ? 💧</label>
-                    <textarea id="baptismDate" rows="5" placeholder="❌ ถ้ายังไม่ได้รับ....&#10;ให้ตอบว่า ยังไม่ได้รับ&#10;&#10;✅ ถ้าเคยรับแล้ว...&#10;รบกวนระบุ วันที่หรือช่วงเวลาที่รับ (เท่าที่จำได้) นะคะ/ครับ 🙏&#10;เช่น “ปี 2021”, “ตอนขึ้น ม.6”, หรือ “วันที่ 10 ต.ค. 2020”" required></textarea>
+                    <div class="hint-box small">
+                        ❌ ถ้ายังไม่ได้รับ... ให้ตอบว่า "ยังไม่ได้รับ"<br><br>
+                        ✅ ถ้าเคยรับแล้ว... รบกวนระบุ วันที่หรือช่วงเวลาที่รับ (เท่าที่จำได้) นะคะ/ครับ 🙏 <br>เช่น “ปี 2021”, “ตอนขึ้น ม.6”, หรือ “วันที่ 10 ต.ค. 2020”
+                    </div>
+                    <textarea id="baptismDate" rows="2" required></textarea>
                 </div>
+                
                 <div class="form-group"><label>คริสตจักรที่เป็นสมาชิกอยู่</label><input type="text" id="oldChurch" value="ไม่ได้เป็นสมาชิกคริสตจักรใด"></div>
                 
-                <!-- 6. แก้ไขช่องทางรู้จัก เป็น Checkbox + อื่นๆ -->
                 <div class="form-group">
                     <label>รู้จัก Nexus Life ผ่านทางช่องทางใด *</label>
                     <div class="hint-box small">
@@ -147,10 +151,9 @@
                     </div>
                 </div>
 
-                <!-- 7. เพิ่ม Hint-box สิ่งที่สนใจ -->
                 <div class="form-group">
                     <label>สิ่งที่สนใจหรือต้องการ ใน NxLife</label>
-                    <div class="hint-box" style="margin-bottom: 6px;">💡 ระบุได้มากกว่า 1 ข้อ</div>
+                    <div class="hint-box small" style="margin-bottom: 6px;">💡 ระบุได้มากกว่า 1 ข้อ</div>
                     <div class="check-group">
                         <label class="check-item"><input type="checkbox" name="interest" value="อยากรู้จักพระเจ้า"> อยากรู้จักพระเจ้า</label>
                         <label class="check-item"><input type="checkbox" name="interest" value="ต้องการคำอธิษฐานเผื่อ"> ต้องการคำอธิษฐานเผื่อ</label>
@@ -179,10 +182,11 @@
 
             <div class="submit-section">
                 <p class="submit-note">ก่อนกด ลงทะเบียน…<br>✨ ส่งยิ้มหวาน ๆ พร้อมหัวใจที่อบอุ่นให้กันสักนิด 💖<br>แล้วค่อยๆ แตะที่ปุ่ม "ส่งความรักและลงทะเบียน" อย่างแผ่วเบา…</p>
-                <button type="submit" class="btn-submit" id="submitBtn">✨ ส่งความรักและลงทะเบียน ✨</button>
+                <!-- เปลี่ยนข้อความปุ่มตามคำขอ -->
+                <button type="submit" class="btn-submit" id="submitBtn">✨ส่งความรักและลงทะเบียน</button>
             </div>
         </form>
-        <div class="footer-text">NxLife CRM v2.0 Create By System Designer</div>
+        <div class="footer-text">NxLife CRM Create By System Designer</div>
     </div>
 
     <!-- 🎉 Success Screen -->
@@ -195,13 +199,12 @@
                 หากท่านต้องการสอบถาม หรือมีข้อเสนอแนะ<br>สามารถติดต่อผู้แนะนำหรือหัวหน้าแคร์ได้เลยจ้า 😊🙏
             </p>
         </div>
-        <div class="footer-text">NxLife CRM v2.0 Create By System Designer</div>
+        <div class="footer-text">NxLife CRM Create By System Designer</div>
     </div>
 
     <script>
         let base64String = ""; let mimeType = "";
 
-        // จัดฟอร์แมตเบอร์โทรอัตโนมัติ
         document.querySelectorAll('.phone-format').forEach(i => { 
             i.addEventListener('input', e => { 
                 let x = e.target.value.replace(/\D/g, '').match(/(\d{0,3})(\d{0,3})(\d{0,4})/); 
@@ -209,7 +212,6 @@
             }); 
         });
 
-        // แสดงช่อง "อื่นๆ" เมื่อถูก Check
         document.getElementById('chkOtherSource').addEventListener('change', function() {
             document.getElementById('otherSourceInput').style.display = this.checked ? 'block' : 'none';
         });
@@ -217,7 +219,6 @@
             document.getElementById('otherInterestInput').style.display = this.checked ? 'block' : 'none';
         });
 
-        // จัดการรูปภาพเป็น Base64
         document.getElementById('fileInput').addEventListener('change', e => { 
             const f = e.target.files[0]; 
             if (f) { 
@@ -233,22 +234,19 @@
             } 
         });
 
-        // Submit Form
         document.getElementById('nexusForm').addEventListener('submit', e => {
             e.preventDefault(); 
             const b = document.getElementById('submitBtn'); 
             b.innerText = "กำลังเชื่อมโยงสายใยแห่งรัก... ⏳"; 
             b.disabled = true;
 
-            // รวบรวม Source Channel (ช่องทางรู้จัก)
             const sources = []; 
             document.querySelectorAll('input[name="source"]:checked').forEach(c => sources.push(c.value));
             if(document.getElementById('chkOtherSource').checked && document.getElementById('otherSourceInput').value) {
                 sources.push("อื่นๆ: " + document.getElementById('otherSourceInput').value);
             }
-            if(sources.length === 0) { alert("กรุณาเลือกช่องทางที่รู้จัก Nexus Life ด้วยนะคะ"); b.disabled = false; b.innerText = "✨ ส่งความรักและลงทะเบียน ✨"; return; }
+            if(sources.length === 0) { alert("กรุณาเลือกช่องทางที่รู้จัก Nexus Life ด้วยนะคะ"); b.disabled = false; b.innerText = "✨ส่งความรักและลงทะเบียน"; return; }
 
-            // รวบรวม Interest (สิ่งที่สนใจ)
             const interests = []; 
             document.querySelectorAll('input[name="interest"]:checked').forEach(c => interests.push(c.value));
             if(document.getElementById('chkOtherInterest').checked && document.getElementById('otherInterestInput').value) {
@@ -276,7 +274,7 @@
                 shippingPhone: document.getElementById('shippingPhone').value 
             };
 
-            // ⚠️ นำ URL จาก Google Apps Script มาใส่ตรงนี้
+            // URL ที่เฮียระบุไว้ (ฝังให้เรียบร้อย)
             const scriptURL = 'https://script.google.com/macros/s/AKfycbwZvScT487zNtNHIRbkBbSV1bklJqx2plme0bcJKyo24KmFQbe1SS0lUFFQbmgZo8zWjw/exec';
 
             fetch(scriptURL, { method: 'POST', body: JSON.stringify(payload) })
@@ -288,7 +286,7 @@
             .catch(err => { 
                 alert("เกิดข้อผิดพลาด: " + err.message); 
                 b.disabled = false; 
-                b.innerText = "✨ ส่งความรักและลงทะเบียน ✨"; 
+                b.innerText = "✨ส่งความรักและลงทะเบียน"; 
             });
         });
     </script>
