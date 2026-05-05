@@ -12,11 +12,9 @@
             --accent-gold: #B8860B; 
             --text-main: #333333; 
             --border-color: #D1C7B7;
-            
-            /* สีใหม่ตาม Request */
-            --input-bg: #FFF9F2;      /* สีครีมอ่อนๆ */
-            --input-border: #D35400;  /* สีส้มอิฐ */
-            --input-focus: #A04000;   /* สีส้มอิฐเข้มเวลาคลิก */
+            --input-bg: #FFF9F2;      
+            --input-border: #D35400;  
+            --input-focus: #A04000;   
         }
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Prompt', sans-serif; }
         body { background-color: var(--bg-color); color: var(--text-main); }
@@ -28,6 +26,11 @@
         
         .floating-intro { background: #FFFFFF; border-radius: 12px; padding: 30px 22px; text-align: center; box-shadow: 0 8px 25px rgba(0,0,0,0.08); margin-bottom: 25px; }
         .intro-logo { width: 90px; height: auto; margin: 0 auto 15px; display: block; }
+        
+        /* 🎯 แอนิเมชันให้โลโก้เต้นช้าๆ กลับมาแล้วครับ */
+        .pulse-logo { animation: pulse 2.5s infinite ease-in-out; }
+        @keyframes pulse { 0%, 100% {transform: scale(1);} 50% {transform: scale(1.08);} }
+
         .intro-sub { font-size: 1rem; color: #555; font-weight: 500; margin-bottom: 8px; }
         .floating-intro h1 { font-size: 1.6rem; color: var(--accent-gold); margin-bottom: 15px; font-weight: 600; }
         .floating-intro p { font-size: 0.95rem; color: #444; line-height: 1.8; white-space: pre-line; }
@@ -41,35 +44,14 @@
         .hint-box { font-size: 0.8rem; color: #555; margin-bottom: 8px; background: #fafafa; padding: 10px; border-radius: 8px; line-height: 1.5; border-left: 3px solid #eee; }
         .hint-box.small { font-size: 0.75rem; }
         
-        /* สไตล์กล่องข้อความ สีครีมอ่อน ขอบส้มอิฐ */
-        input, select, textarea { 
-            width: 100%; 
-            padding: 12px 14px; 
-            border: 1px solid var(--input-border); 
-            background-color: var(--input-bg);
-            border-radius: 8px; 
-            font-size: 0.95rem; 
-            transition: all 0.3s ease; 
-            color: var(--primary-dark); 
-        }
-        
-        input:focus, select:focus, textarea:focus { 
-            outline: none; 
-            border-color: var(--input-focus); 
-            box-shadow: 0 0 0 3px rgba(211, 84, 0, 0.15); 
-        }
-        
-        ::placeholder { color: #B38C70; font-size: 0.85rem; } /* ปรับสี placeholder ให้เข้ากับส้มอิฐ */
+        input, select, textarea { width: 100%; padding: 12px 14px; border: 1px solid var(--input-border); background-color: var(--input-bg); border-radius: 8px; font-size: 0.95rem; transition: all 0.3s ease; color: var(--primary-dark); }
+        input:focus, select:focus, textarea:focus { outline: none; border-color: var(--input-focus); box-shadow: 0 0 0 3px rgba(211, 84, 0, 0.15); }
+        ::placeholder { color: #B38C70; font-size: 0.85rem; }
         
         .radio-btn-group { display: flex; gap: 8px; }
         .radio-btn { flex: 1; }
         .radio-btn input { display: none; }
-        .radio-btn label { 
-            display: block; padding: 10px; 
-            border: 1px solid var(--input-border); 
-            background-color: var(--input-bg);
-            border-radius: 8px; text-align: center; cursor: pointer; font-size: 0.9rem; transition: 0.2s; 
-        }
+        .radio-btn label { display: block; padding: 10px; border: 1px solid var(--input-border); background-color: var(--input-bg); border-radius: 8px; text-align: center; cursor: pointer; font-size: 0.9rem; transition: 0.2s; }
         .radio-btn input:checked + label { background: var(--input-focus); color: white; border-color: var(--input-focus); font-weight: 500; }
         
         .check-group { display: flex; flex-direction: column; gap: 4px; margin-top: 5px; }
@@ -96,9 +78,9 @@
     <div class="banner-container"><img src="https://github.com/NexusLifeChurch/NxLife_Mbr_Regist/blob/main/images/Logo/banner_alpha.jpg?raw=true" alt="Nexus Life Banner"></div>
     <div class="container" id="form-container">
         
-        <!-- ส่วนต้อนรับแบบใหม่ -->
         <div class="floating-intro">
-            <img src="https://github.com/NexusLifeChurch/NxLife_Mbr_Regist/blob/main/images/Logo/life_logo.png?raw=true" alt="Logo" class="intro-logo">
+            <!-- 🎯 คลาส pulse-logo เพื่อให้โลโก้เต้นช้าๆ -->
+            <img src="https://github.com/NexusLifeChurch/NxLife_Mbr_Regist/blob/main/images/Logo/life_logo.png?raw=true" alt="Logo" class="intro-logo pulse-logo">
             <div class="intro-sub">✨เพราะพระเจ้าทรงนำ เราจึงได้พบกัน✨</div>
             <h1>🌿ลงทะเบียน Nexus Life🌿</h1>
             <p>เพียงกรอกข้อมูลด้านล่าง 
@@ -130,13 +112,10 @@
                 <div class="form-group"><label>เบอร์โทรศัพท์ติดต่อ *</label><input type="tel" id="phone" placeholder="000-000-0000" class="phone-format" required></div>
                 <div class="form-group"><label>Line ID</label><input type="text" id="lineId" placeholder="ระบุ ID เพื่อเพิ่มเป็นเพื่อนกันใน Line"></div>
                 <div class="form-group"><label>Email</label><input type="email" id="email" placeholder="example@email.com"></div>
-                
-                <!-- แก้ไขคำถามช่องทางติดต่ออื่นๆ และ Placeholder -->
                 <div class="form-group">
                     <label>ช่องทางติดต่ออื่นๆ (เช่น Facebook Messenger ฯลฯ)</label>
                     <input type="text" id="contactChannel" placeholder="ระบุ ชื่อ/Link/ID">
                 </div>
-                
                 <div class="form-group"><label>ที่อยู่สำหรับส่งเอกสาร/ของรางวัล *</label><textarea id="shippingAddress" rows="3" placeholder="ระบุที่อยู่ให้ชัดเจน (บ้านเลขที่, ถนน, ตำบล, อำเภอ, จังหวัด, รหัสไปรษณีย์) สำหรับจัดส่งของรางวัล 🎁" required></textarea></div>
                 <div class="form-group"><label>เบอร์โทรสำหรับขนส่งพัสดุ *</label><input type="tel" id="shippingPhone" placeholder="000-000-0000" class="phone-format" required></div>
             </div>
@@ -144,30 +123,24 @@
             <!-- 💛 เรื่องราวความเชื่อ -->
             <div class="form-card">
                 <div class="card-title">💛 เรื่องราวความเชื่อ</div>
-                
                 <div class="form-group">
                     <label>คุณเป็นคริสเตียนแล้วหรือยังคะ? ✨</label>
                     <div class="hint-box small">
                         ❌ ถ้ายังไม่ได้เป็นคริสเตียน... รบกวนระบุว่า "ยังไม่ได้เป็นคริสเตียน"<br><br>
                         ✅ ถ้าเป็นคริสเตียนแล้ว... ให้ระบุวันที่รับเชื่อ (ถ้าจำไม่ได้แน่นอน ให้ระบุช่วงเวลาก็ได้ค่ะ เช่น “ปี 2020” หรือ “ตอนอยู่ ม.5")
                     </div>
-                    <!-- แก้ Placeholder -->
                     <textarea id="believeDate" rows="2" placeholder="วันเดือนปี ที่รับเชื่อ" required></textarea>
                 </div>
-
                 <div class="form-group">
                     <label>ได้รับบัพติสมาในน้ำแล้วหรือยังคะ? 💧</label>
                     <div class="hint-box small">
                         ❌ ถ้ายังไม่ได้รับ... ให้ตอบว่า "ยังไม่ได้รับ"<br><br>
                         ✅ ถ้าเคยรับแล้ว... รบกวนระบุ วันที่หรือช่วงเวลาที่รับ (เท่าที่จำได้) นะคะ/ครับ 🙏 <br>เช่น “ปี 2021”, “ตอนขึ้น ม.6”, หรือ “วันที่ 10 ต.ค. 2020”
                     </div>
-                    <!-- แก้ Placeholder -->
                     <textarea id="baptismDate" rows="2" placeholder="วันเดือนปีที่รับบัพติสมาฯ" required></textarea>
                 </div>
-                
                 <div class="form-group"><label>คริสตจักรที่เป็นสมาชิกอยู่</label><input type="text" id="oldChurch" value="ไม่ได้เป็นสมาชิกคริสตจักรใด"></div>
                 
-                <!-- เปลี่ยนช่องทางที่รู้จัก เป็น Dropdown เลือก 1 ข้อ -->
                 <div class="form-group">
                     <label>รู้จัก Nexus Life ผ่านทางช่องทางใด *</label>
                     <div class="hint-box small">
@@ -229,7 +202,8 @@
     <!-- 🎉 Success Screen -->
     <div class="container" id="success-screen">
         <div class="floating-intro">
-            <img src="https://github.com/NexusLifeChurch/NxLife_Mbr_Regist/blob/main/images/Logo/life_logo.png?raw=true" class="success-logo">
+            <!-- 🎯 คลาส pulse-logo หน้า Success -->
+            <img src="https://github.com/NexusLifeChurch/NxLife_Mbr_Regist/blob/main/images/Logo/life_logo.png?raw=true" class="success-logo pulse-logo">
             <h2 style="color: var(--accent-gold); margin-bottom: 12px; font-size: 1.3rem;">🌿 ขอต้อนรับสู่ครอบครัว Nexus Life 🌿</h2>
             <p style="font-size: 1rem; color: var(--primary-dark); font-weight: 500; line-height: 1.8; text-align: center;">
                 เรื่องราวความทรงจำ<br>ระหว่าง <strong>“ท่านกับพระเจ้า และพวกเรา”</strong><br>ได้เริ่มต้นขึ้นแล้ว!! ✨💛<br><br>
@@ -242,7 +216,6 @@
     <script>
         let base64String = ""; let mimeType = "";
 
-        // รูปแบบเบอร์โทร
         document.querySelectorAll('.phone-format').forEach(i => { 
             i.addEventListener('input', e => { 
                 let x = e.target.value.replace(/\D/g, '').match(/(\d{0,3})(\d{0,3})(\d{0,4})/); 
@@ -250,47 +223,58 @@
             }); 
         });
 
-        // Dropdown แสดงช่องกรอกอื่นๆ
         function toggleOtherSource() {
             var val = document.getElementById('sourceChannel').value;
             document.getElementById('otherSourceInput').style.display = (val === 'อื่นๆ') ? 'block' : 'none';
         }
 
-        // Checkbox แสดงช่องกรอกอื่นๆ
         document.getElementById('chkOtherInterest').addEventListener('change', function() {
             document.getElementById('otherInterestInput').style.display = this.checked ? 'block' : 'none';
         });
 
-        // ภาพ Preview
+        // 🎯 [ระบบบีบอัดรูปภาพ] Resize รูปให้เล็กลงก่อนส่ง ป้องกัน Data หายหรือ Timeout
         document.getElementById('fileInput').addEventListener('change', e => { 
             const f = e.target.files[0]; 
             if (f) { 
                 mimeType = f.type; 
-                const r = new FileReader(); 
-                r.onload = ev => { 
-                    base64String = ev.target.result.split(',')[1]; 
-                    document.getElementById('preview').src = ev.target.result; 
-                    document.getElementById('preview').style.display = 'block'; 
-                    document.getElementById('uploadText').style.display = 'none'; 
+                const reader = new FileReader(); 
+                reader.readAsDataURL(f);
+                reader.onload = ev => { 
+                    const img = new Image();
+                    img.src = ev.target.result;
+                    img.onload = () => {
+                        const canvas = document.createElement('canvas');
+                        const MAX_WIDTH = 800; // ย่อขนาดไม่เกิน 800px
+                        const scaleSize = MAX_WIDTH / img.width;
+                        canvas.width = MAX_WIDTH;
+                        canvas.height = img.height * scaleSize;
+                        
+                        const ctx = canvas.getContext('2d');
+                        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                        
+                        // แปลงเป็น JPEG แบบบีบอัด 70%
+                        const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.7);
+                        base64String = compressedDataUrl.split(',')[1]; 
+                        
+                        document.getElementById('preview').src = compressedDataUrl; 
+                        document.getElementById('preview').style.display = 'block'; 
+                        document.getElementById('uploadText').style.display = 'none'; 
+                    }
                 }; 
-                r.readAsDataURL(f); 
             } 
         });
 
-        // Submit Action
         document.getElementById('nexusForm').addEventListener('submit', e => {
             e.preventDefault(); 
             const b = document.getElementById('submitBtn'); 
             b.innerText = "กำลังเชื่อมโยงสายใยแห่งรัก... ⏳"; 
             b.disabled = true;
 
-            // รวบรวม Source Channel (จาก Dropdown)
             let finalSource = document.getElementById('sourceChannel').value;
             if(finalSource === 'อื่นๆ') {
                 finalSource = "อื่นๆ: " + document.getElementById('otherSourceInput').value;
             }
 
-            // รวบรวม Interest
             const interests = []; 
             document.querySelectorAll('input[name="interest"]:checked').forEach(c => interests.push(c.value));
             if(document.getElementById('chkOtherInterest').checked && document.getElementById('otherInterestInput').value) {
@@ -304,7 +288,7 @@
                 gender: document.querySelector('input[name="gender"]:checked').value, 
                 birthDate: document.getElementById('birthDate').value, 
                 profileBase64: base64String, 
-                mimeType: mimeType, 
+                mimeType: mimeType || 'image/jpeg', // Force MIME
                 believeDate: document.getElementById('believeDate').value, 
                 baptismDate: document.getElementById('baptismDate').value, 
                 oldChurch: document.getElementById('oldChurch').value, 
@@ -318,10 +302,14 @@
                 shippingPhone: document.getElementById('shippingPhone').value 
             };
 
-            // URL ที่ให้มา
             const scriptURL = 'https://script.google.com/macros/s/AKfycbwZvScT487zNtNHIRbkBbSV1bklJqx2plme0bcJKyo24KmFQbe1SS0lUFFQbmgZo8zWjw/exec';
 
-            fetch(scriptURL, { method: 'POST', body: JSON.stringify(payload) })
+            // 🎯 ใส่ headers: text/plain ช่วยลดปัญหา Google Block Payload
+            fetch(scriptURL, { 
+                method: 'POST', 
+                body: JSON.stringify(payload),
+                headers: { 'Content-Type': 'text/plain;charset=utf-8' }
+            })
             .then(() => { 
                 document.getElementById('form-container').style.display = 'none'; 
                 document.getElementById('success-screen').style.display = 'block'; 
