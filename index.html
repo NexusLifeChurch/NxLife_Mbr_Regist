@@ -1,4 +1,4 @@
-<!-- NxLife Registration Form v1.6 -->
+<!-- NxLife Registration Form v1.7 -->
 <!DOCTYPE html>
 <html lang="th">
 <head>
@@ -7,7 +7,7 @@
 <title>NxLife — ลงทะเบียนสมาชิกใหม่</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
 <style>
 :root {
   --primary:    #2C241E;
@@ -45,21 +45,25 @@ body{
 /* ── BANNER ── */
 .banner-wrap{
   width:100%;overflow:hidden;
-  border-radius:0 0 28px 28px;
+  border-radius:0 0 16px 16px;
   box-shadow:var(--shadow-lg);
+  position:relative;
+  z-index: 1;
 }
 .banner-wrap img{width:100%;display:block;object-fit:cover;}
 
 /* ── WELCOME CARD ── */
 .welcome-card{
-  margin:20px 14px 0;
+  margin:-32px 14px 0;
   background:var(--bg-card);
   border-radius:var(--radius);
   border:1px solid #DDD3BA;
   padding:28px 22px 24px;
   box-shadow:var(--shadow-md);
   text-align:center;
-  position:relative;overflow:hidden;
+  position:relative;
+  z-index: 2;
+  overflow:hidden;
   animation:fadeUp .6s ease both;
 }
 .welcome-card::before{
@@ -69,9 +73,10 @@ body{
 .logo-beat{
   width:88px;height:88px;
   border-radius:50%;
-  object-fit:cover;
+  object-fit:contain;
   margin:0 auto 16px;
   display:block;
+  background: #fff;
   box-shadow:0 0 0 6px rgba(184,134,11,.12),var(--shadow);
   animation:heartbeat 3.2s ease-in-out infinite;
 }
@@ -84,11 +89,11 @@ body{
 }
 .welcome-title{
   font-family:'Playfair Display',serif;
-  font-style:italic;
-  font-size:17px;
+  font-weight:700;
+  font-size:20px;
   color:var(--gold);
-  margin-bottom:10px;
-  line-height:1.5;
+  margin-bottom:12px;
+  line-height:1.4;
 }
 .welcome-text{font-size:14.5px;color:var(--text-muted);line-height:1.9;}
 
@@ -315,7 +320,8 @@ select{
 }
 .success-logo-beat{
   width:96px;height:96px;border-radius:50%;
-  object-fit:cover;margin:0 auto 20px;display:block;
+  object-fit:contain;margin:0 auto 20px;display:block;
+  background: #fff;
   box-shadow:0 0 0 8px rgba(184,134,11,.1),var(--shadow-md);
   animation:heartbeat 3.2s ease-in-out infinite;
 }
@@ -387,7 +393,7 @@ input.invalid,textarea.invalid,select.invalid{
 <div id="successScreen">
   <div class="success-card">
     <img class="success-logo-beat"
-      src="https://github.com/NexusLifeChurch/NxLife_Mbr_Regist/blob/main/images/Logo/banner_alpha.jpg?raw=true"
+      src="https://github.com/NexusLifeChurch/NxLife_Mbr_Regist/blob/main/images/Logo/life_logo.png?raw=true"
       alt="NxLife Logo"/>
     <div class="success-congrats">🌿 Welcome to the Family</div>
     <div class="success-title">เราได้รับข้อมูลของท่านแล้ว<br>และขอต้อนรับสู่ครอบครัว Nexus Life</div>
@@ -414,9 +420,9 @@ input.invalid,textarea.invalid,select.invalid{
   <!-- Welcome -->
   <div class="welcome-card">
     <img class="logo-beat"
-      src="https://github.com/NexusLifeChurch/NxLife_Mbr_Regist/blob/main/images/Logo/banner_alpha.jpg?raw=true"
+      src="https://github.com/NexusLifeChurch/NxLife_Mbr_Regist/blob/main/images/Logo/life_logo.png?raw=true"
       alt="NxLife Logo"/>
-    <div class="welcome-title">✨ เพราะพระเจ้าทรงนำ เราจึงได้พบกัน ✨</div>
+    <div class="welcome-title">✨ เพราะพระเจ้าทรงนำ<br>เราจึงได้พบกัน ✨</div>
     <p class="welcome-text">
       เพียงกรอกข้อมูลด้านล่าง ก็เริ่มต้นเชื่อมโยงสายใยแห่งมิตรภาพและความรัก
       ในพื้นที่ปลอดภัย 💖 ในครอบครัวแห่งพระคุณ
@@ -555,11 +561,11 @@ input.invalid,textarea.invalid,select.invalid{
         <textarea id="baptismDate" rows="2"
           placeholder="เช่น กุมภาพันธ์ 2021 / ยังไม่ได้รับบัพติสมา"></textarea>
       </div>
-
+      
       <div class="field-group">
-        <label for="oldChurch">คริสตจักรเดิม<span class="req">*</span></label>
-        <input type="text" id="oldChurch" placeholder="ไม่ได้เป็นสมาชิกคริสตจักรใด"/>
-        <div class="field-error" id="err-oldChurch">กรุณากรอกข้อมูลคริสตจักรเดิม</div>
+        <label for="oldChurch">คริสตจักรเดิม <span class="opt">(ถ้าไม่มี ไม่ต้องระบุ)</span></label>
+        <input type="text" id="oldChurch" placeholder="ระบุชื่อคริสตจักรเดิม..."/>
+        <div class="field-desc">หากปล่อยว่าง ระบบจะระบุว่า "ไม่ได้เป็นสมาชิกคริสตจักรใด" ให้โดยอัตโนมัติ</div>
       </div>
 
       <div class="field-group">
@@ -581,6 +587,12 @@ input.invalid,textarea.invalid,select.invalid{
           <option value="อื่นๆ">อื่นๆ</option>
         </select>
         <div class="field-error" id="err-sourceChannel">กรุณาเลือกช่องทาง</div>
+      </div>
+      
+      <!-- ซ่อนไว้ก่อน จะโชว์เมื่อเลือก "อื่นๆ" -->
+      <div class="field-group" id="sourceOtherGroup" style="display:none; margin-top:-8px;">
+        <input type="text" id="sourceOther" placeholder="โปรดระบุรายละเอียดช่องทาง..."/>
+        <div class="field-error" id="err-sourceOther">กรุณาระบุรายละเอียดเพิ่มเติม</div>
       </div>
 
       <div class="field-group">
@@ -706,10 +718,10 @@ function clearErr(id, errId) {
 function validateForm() {
   let ok = true;
 
-  // Required text fields
+  // Required text fields (ถอด oldChurch ออก)
   [['firstName','err-firstName'],['lastName','err-lastName'],['nickname','err-nickname'],
    ['birthDate','err-birthDate'],['believeDate','err-believeDate'],
-   ['oldChurch','err-oldChurch'],['sourceChannel','err-sourceChannel']
+   ['sourceChannel','err-sourceChannel']
   ].forEach(([id, errId]) => {
     const el = document.getElementById(id);
     const er = document.getElementById(errId);
@@ -719,6 +731,18 @@ function validateForm() {
       el.classList.remove('invalid'); er && er.classList.remove('visible');
     }
   });
+  
+  // เช็ค Source Channel อื่นๆ
+  const sChan = document.getElementById('sourceChannel').value;
+  if (sChan === "อื่นๆ") {
+      const sOther = document.getElementById('sourceOther');
+      const errSOther = document.getElementById('err-sourceOther');
+      if (!sOther.value.trim()) {
+          sOther.classList.add('invalid'); errSOther.classList.add('visible'); ok = false;
+      } else {
+          sOther.classList.remove('invalid'); errSOther.classList.remove('visible');
+      }
+  }
 
   // Gender
   const gender = document.querySelector('input[name="gender"]:checked');
@@ -750,10 +774,6 @@ async function submitForm() {
     if (firstBad) firstBad.scrollIntoView({ behavior:'smooth', block:'center' });
     return;
   }
-  if (GAS_URL === "YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE") {
-    alert("⚠️ กรุณาตั้งค่า GAS_URL ในไฟล์ index.html ก่อนใช้งาน");
-    return;
-  }
 
   const btn = document.getElementById('submitBtn');
   const loadingOverlay = document.getElementById('loadingOverlay');
@@ -764,6 +784,12 @@ async function submitForm() {
   btn.disabled = true;
   loadingText.innerHTML = "กำลังเชื่อมโยงสายใยแห่งรัก... ⏳<br><span style='font-size:13px;font-weight:400;opacity:.85'>กรุณารอสักครู่ 🙏</span>";
   loadingOverlay.classList.add('active');
+  
+  // จัดการ Source Channel กรณีเลือกอื่นๆ
+  let finalSourceChannel = document.getElementById('sourceChannel').value;
+  if (finalSourceChannel === "อื่นๆ") {
+      finalSourceChannel = "อื่นๆ: " + document.getElementById('sourceOther').value.trim();
+  }
 
   const payload = {
     firstName: document.getElementById('firstName').value.trim(),
@@ -779,8 +805,9 @@ async function submitForm() {
     shippingPhone:   document.getElementById('shippingPhone').value.trim(),
     believeDate:     document.getElementById('believeDate').value.trim(),
     baptismDate:     document.getElementById('baptismDate').value.trim(),
+    // คริสตจักรเดิม ถ้าว่างให้ default
     oldChurch:       document.getElementById('oldChurch').value.trim() || 'ไม่ได้เป็นสมาชิกคริสตจักรใด',
-    sourceChannel:   document.getElementById('sourceChannel').value,
+    sourceChannel:   finalSourceChannel,
     interest:        getInterests(),
     imageBase64:     avatarBase64,
   };
@@ -816,7 +843,7 @@ async function submitForm() {
 }
 
 // ── LIVE CLEAR ERRORS ─────────────────────────────────────────
-['firstName','lastName','nickname','birthDate','believeDate','oldChurch','sourceChannel'].forEach(id => {
+['firstName','lastName','nickname','birthDate','believeDate'].forEach(id => {
   const el = document.getElementById(id);
   if (!el) return;
   el.addEventListener('input', () => clearErr(id, 'err-' + id));
@@ -838,6 +865,23 @@ document.querySelectorAll('#interestGrid input').forEach(cb => {
     if (p || l || e) document.getElementById('contactWarning').classList.remove('visible');
   });
 });
+
+// Event Listener สำหรับ Dropdown ช่องทาง
+document.getElementById('sourceChannel').addEventListener('change', function() {
+    clearErr('sourceChannel', 'err-sourceChannel');
+    const otherGroup = document.getElementById('sourceOtherGroup');
+    if (this.value === "อื่นๆ") {
+        otherGroup.style.display = "block";
+    } else {
+        otherGroup.style.display = "none";
+        document.getElementById('sourceOther').value = ""; // clear ค่าถ้าเปลี่ยนไปเลือกอันอื่น
+        document.getElementById('err-sourceOther').classList.remove('visible');
+        document.getElementById('sourceOther').classList.remove('invalid');
+    }
+});
+// เคลียร์ error กล่อง "อื่นๆ" ตอนพิมพ์
+document.getElementById('sourceOther').addEventListener('input', () => clearErr('sourceOther', 'err-sourceOther'));
+
 </script>
 </body>
 </html>
