@@ -1,4 +1,4 @@
-<!-- NxLife Registration Form v1.7 -->
+<!-- NxLife Registration Form v1.8 -->
 <!DOCTYPE html>
 <html lang="th">
 <head>
@@ -7,7 +7,8 @@
 <title>NxLife — ลงทะเบียนสมาชิกใหม่</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<!-- นำเข้า Font: Prompt และ Sarabun -->
+<link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;500;600;700&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
 <style>
 :root {
   --primary:    #2C241E;
@@ -70,14 +71,22 @@ body{
   content:'';position:absolute;top:0;left:0;right:0;height:4px;
   background:linear-gradient(90deg,var(--gold),#E8C042,var(--gold));
 }
+
+/* ── LOGO (PNG แบบไม่มีกรอบ) ── */
 .logo-beat{
-  width:88px;height:88px;
-  border-radius:50%;
+  width:100px;
+  height:auto;
   object-fit:contain;
   margin:0 auto 16px;
   display:block;
-  background: #fff;
-  box-shadow:0 0 0 6px rgba(184,134,11,.12),var(--shadow);
+  animation:heartbeat 3.2s ease-in-out infinite;
+}
+.success-logo-beat{
+  width:110px;
+  height:auto;
+  object-fit:contain;
+  margin:0 auto 20px;
+  display:block;
   animation:heartbeat 3.2s ease-in-out infinite;
 }
 @keyframes heartbeat{
@@ -87,13 +96,25 @@ body{
   42%{transform:scale(1.04);}
   56%{transform:scale(1);}
 }
+
+/* ── WELCOME TITLE ── */
 .welcome-title{
-  font-family:'Playfair Display',serif;
-  font-weight:700;
-  font-size:20px;
   color:var(--gold);
   margin-bottom:12px;
   line-height:1.4;
+}
+.welcome-title-1 {
+  font-family: 'Prompt', sans-serif;
+  font-weight: 600;
+  font-size: 21px;
+  display: block;
+  margin-bottom: 4px;
+}
+.welcome-title-2 {
+  font-family: 'Sarabun', sans-serif;
+  font-weight: 600;
+  font-size: 19px;
+  display: block;
 }
 .welcome-text{font-size:14.5px;color:var(--text-muted);line-height:1.9;}
 
@@ -127,7 +148,7 @@ body{
   box-shadow:0 2px 8px rgba(184,134,11,.25);
 }
 .section-title{
-  font-family:'Playfair Display',serif;
+  font-family:'Prompt', sans-serif; /* เปลี่ยนหมวดหมู่เป็น Prompt */
   font-size:17px;font-weight:600;
   color:var(--primary);
   letter-spacing:.01em;
@@ -264,7 +285,7 @@ select{
   width:100%;padding:17px 24px;
   background:linear-gradient(135deg,#2C241E 0%,#3E3028 60%,#2C241E 100%);
   color:#fff;border:none;border-radius:var(--radius);
-  font-family:'Sarabun',sans-serif;font-size:17px;font-weight:700;
+  font-family:'Prompt',sans-serif;font-size:17px;font-weight:500;
   cursor:pointer;letter-spacing:.04em;
   transition:all var(--transition);
   box-shadow:0 6px 24px rgba(44,36,30,.28);
@@ -292,7 +313,7 @@ select{
   border-top-color:var(--gold-light);
   border-radius:50%;animation:spin .85s linear infinite;
 }
-.loading-text{color:#fff;font-size:16px;font-weight:600;text-align:center;line-height:1.5;}
+.loading-text{color:#fff;font-family:'Prompt',sans-serif;font-size:16px;font-weight:500;text-align:center;line-height:1.5;}
 
 /* ── SUCCESS SCREEN ── */
 #successScreen{
@@ -318,20 +339,13 @@ select{
   content:'';position:absolute;top:0;left:0;right:0;height:5px;
   background:linear-gradient(90deg,var(--gold),#E8C042,var(--gold));
 }
-.success-logo-beat{
-  width:96px;height:96px;border-radius:50%;
-  object-fit:contain;margin:0 auto 20px;display:block;
-  background: #fff;
-  box-shadow:0 0 0 8px rgba(184,134,11,.1),var(--shadow-md);
-  animation:heartbeat 3.2s ease-in-out infinite;
-}
 .success-congrats{
-  font-size:13px;font-weight:600;letter-spacing:.12em;
+  font-family:'Prompt',sans-serif;font-size:13px;font-weight:600;letter-spacing:.12em;
   text-transform:uppercase;color:var(--gold);margin-bottom:8px;
 }
 .success-title{
-  font-family:'Playfair Display',serif;
-  font-size:21px;font-weight:600;color:var(--primary);
+  font-family:'Prompt',sans-serif;
+  font-size:20px;font-weight:600;color:var(--primary);
   line-height:1.5;margin-bottom:14px;
 }
 .success-divider{
@@ -386,7 +400,7 @@ input.invalid,textarea.invalid,select.invalid{
 <!-- LOADING -->
 <div class="loading-overlay" id="loadingOverlay">
   <div class="spinner"></div>
-  <div class="loading-text">กำลังเชื่อมโยงสายใยแห่งรัก... ⏳<br><span style="font-size:13px;font-weight:400;opacity:.85">กรุณารอสักครู่ 🙏</span></div>
+  <div class="loading-text">กำลังเชื่อมโยงสายใยแห่งรัก... ⏳<br><span style="font-family:'Sarabun',sans-serif;font-size:13px;font-weight:400;opacity:.85">กรุณารอสักครู่ 🙏</span></div>
 </div>
 
 <!-- SUCCESS -->
@@ -422,7 +436,10 @@ input.invalid,textarea.invalid,select.invalid{
     <img class="logo-beat"
       src="https://github.com/NexusLifeChurch/NxLife_Mbr_Regist/blob/main/images/Logo/life_logo.png?raw=true"
       alt="NxLife Logo"/>
-    <div class="welcome-title">✨ เพราะพระเจ้าทรงนำ<br>เราจึงได้พบกัน ✨</div>
+    <div class="welcome-title">
+      <span class="welcome-title-1">✨ เพราะพระเจ้าทรงนำ ✨</span>
+      <span class="welcome-title-2">เราจึงได้พบกัน</span>
+    </div>
     <p class="welcome-text">
       เพียงกรอกข้อมูลด้านล่าง ก็เริ่มต้นเชื่อมโยงสายใยแห่งมิตรภาพและความรัก
       ในพื้นที่ปลอดภัย 💖 ในครอบครัวแห่งพระคุณ
@@ -782,7 +799,7 @@ async function submitForm() {
   // เปลี่ยนเป็น State: Loading
   btn.innerHTML = "กำลังเชื่อมโยงสายใยแห่งรัก... ⏳";
   btn.disabled = true;
-  loadingText.innerHTML = "กำลังเชื่อมโยงสายใยแห่งรัก... ⏳<br><span style='font-size:13px;font-weight:400;opacity:.85'>กรุณารอสักครู่ 🙏</span>";
+  loadingText.innerHTML = "กำลังเชื่อมโยงสายใยแห่งรัก... ⏳<br><span style='font-family:\"Sarabun\",sans-serif;font-size:13px;font-weight:400;opacity:.85'>กรุณารอสักครู่ 🙏</span>";
   loadingOverlay.classList.add('active');
   
   // จัดการ Source Channel กรณีเลือกอื่นๆ
