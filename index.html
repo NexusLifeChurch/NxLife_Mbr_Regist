@@ -1,341 +1,843 @@
+<!-- NxLife Registration Form v1.6 -->
 <!DOCTYPE html>
 <html lang="th">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NexusLife Community</title>
-    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <style>
-        :root { 
-            --bg-color: #F8F6F0; 
-            --primary-dark: #2C241E; 
-            --accent-gold: #B8860B; 
-            --text-main: #333333; 
-            --border-color: #D1C7B7;
-            --input-bg: #FFF9F2;      
-            --input-border: #D35400;  
-            --input-focus: #A04000;   
-        }
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Prompt', sans-serif; }
-        body { background-color: var(--bg-color); color: var(--text-main); }
-        
-        .banner-container { width: 100%; overflow: hidden; background: #fff; box-shadow: 0 4px 15px rgba(0,0,0,0.08); }
-        .banner-container img { width: 100%; height: auto; display: block; object-fit: contain; }
-        
-        .container { max-width: 600px; margin: -15px auto 20px; padding: 0 15px; position: relative; z-index: 10; }
-        
-        .floating-intro { background: #FFFFFF; border-radius: 12px; padding: 30px 22px; text-align: center; box-shadow: 0 8px 25px rgba(0,0,0,0.08); margin-bottom: 25px; }
-        .intro-logo { width: 90px; height: auto; margin: 0 auto 15px; display: block; }
-        .pulse-logo { animation: pulse 2.5s infinite ease-in-out; }
-        @keyframes pulse { 0%, 100% {transform: scale(1);} 50% {transform: scale(1.08);} }
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>NxLife — ลงทะเบียนสมาชิกใหม่</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --primary:    #2C241E;
+  --gold:       #B8860B;
+  --gold-light: #D4A017;
+  --gold-pale:  #F0E2B0;
+  --bg:         #EDE5D8;
+  --bg-card:    #FDFAF4;
+  --bg-input:   #F8F4EC;
+  --text:       #2C241E;
+  --text-muted: #7A6A5A;
+  --border:     #D4C9AF;
+  --border-focus: #B8860B;
+  --radius:     18px;
+  --radius-sm:  10px;
+  --shadow:     0 2px 16px rgba(44,36,30,0.09);
+  --shadow-md:  0 4px 28px rgba(44,36,30,0.13);
+  --shadow-lg:  0 8px 40px rgba(44,36,30,0.18);
+  --transition: 0.22s cubic-bezier(0.4,0,0.2,1);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Sarabun',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  min-height:100vh;
+  line-height:1.7;
+  -webkit-font-smoothing:antialiased;
+}
 
-        .intro-sub { font-size: 1rem; color: #555; font-weight: 500; margin-bottom: 8px; }
-        .floating-intro h1 { font-size: 1.6rem; color: var(--accent-gold); margin-bottom: 15px; font-weight: 600; }
-        .floating-intro p { font-size: 0.95rem; color: #444; line-height: 1.8; white-space: pre-line; }
-        
-        .form-card { background: #FFFFFF; border-radius: 12px; padding: 22px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 22px; }
-        .card-title { font-size: 1.05rem; color: var(--accent-gold); margin-bottom: 18px; border-left: 4px solid var(--accent-gold); padding-left: 12px; font-weight: 600; }
-        
-        .form-group { margin-bottom: 18px; }
-        label { display: block; font-weight: 500; margin-bottom: 6px; font-size: 0.9rem; color: var(--primary-dark); }
-        
-        .hint-box { font-size: 0.8rem; color: #555; margin-bottom: 8px; background: #fafafa; padding: 10px; border-radius: 8px; line-height: 1.5; border-left: 3px solid #eee; }
-        .hint-box.small { font-size: 0.75rem; }
-        
-        input, select, textarea { width: 100%; padding: 12px 14px; border: 1px solid var(--input-border); background-color: var(--input-bg); border-radius: 8px; font-size: 0.95rem; transition: all 0.3s ease; color: var(--primary-dark); }
-        input:focus, select:focus, textarea:focus { outline: none; border-color: var(--input-focus); box-shadow: 0 0 0 3px rgba(211, 84, 0, 0.15); }
-        ::placeholder { color: #B38C70; font-size: 0.85rem; }
-        
-        .radio-btn-group { display: flex; gap: 8px; }
-        .radio-btn { flex: 1; }
-        .radio-btn input { display: none; }
-        .radio-btn label { display: block; padding: 10px; border: 1px solid var(--input-border); background-color: var(--input-bg); border-radius: 8px; text-align: center; cursor: pointer; font-size: 0.9rem; transition: 0.2s; }
-        .radio-btn input:checked + label { background: var(--input-focus); color: white; border-color: var(--input-focus); font-weight: 500; }
-        
-        .check-group { display: flex; flex-direction: column; gap: 4px; margin-top: 5px; }
-        .check-item { display: flex; align-items: flex-start; gap: 10px; cursor: pointer; padding: 6px 8px; border-radius: 6px; font-size: 0.85rem; transition: 0.2s; color: #444; }
-        .check-item:hover { background: #fdfaf5; }
-        .check-item input[type="checkbox"] { margin-top: 2px; width: 16px; height: 16px; accent-color: var(--input-focus); flex-shrink: 0; }
-        
-        .upload-area { border: 2px dashed var(--input-border); border-radius: 8px; padding: 25px; text-align: center; cursor: pointer; background: var(--input-bg); transition: 0.3s; }
-        .upload-area:hover { border-color: var(--input-focus); background: #FFF3E0; }
-        
-        /* 🎯 เปลี่ยนดีไซน์ Preview รูปเป็นสี่เหลี่ยมขอบมน + ขอบขาว */
-        #preview { 
-            width: 140px; 
-            height: 140px; 
-            border-radius: 16px; 
-            object-fit: cover; 
-            display: none; 
-            margin: 12px auto; 
-            border: 4px solid #ffffff; 
-            box-shadow: 0 4px 15px rgba(0,0,0,0.12); 
-        }
-        
-        .submit-section { text-align: center; margin-top: 20px; padding: 0 10px; }
-        .submit-note { font-size: 0.85rem; color: #777; line-height: 1.6; margin-bottom: 20px; white-space: pre-line; font-style: italic; }
-        .btn-submit { width: 100%; background: linear-gradient(135deg, var(--input-focus), #873600); color: #FFF; border: none; padding: 18px; font-size: 1.05rem; font-weight: 600; border-radius: 12px; cursor: pointer; box-shadow: 0 4px 15px rgba(211, 84, 0, 0.25); transition: 0.2s; }
-        .btn-submit:active { transform: scale(0.98); }
-        .btn-submit:disabled { background: #ccc; box-shadow: none; cursor: not-allowed; }
-        
-        #success-screen { display: none; text-align: center; animation: fadeIn 0.6s ease-out; }
-        .success-logo { width: 120px; margin-bottom: 20px; }
-        @keyframes fadeIn { from {opacity: 0; transform: translateY(15px);} to {opacity: 1; transform: translateY(0);} }
-        .footer-text { text-align: center; font-size: 0.75rem; color: #9B9288; margin-top: 15px; margin-bottom: 30px; font-weight: 500; }
-    </style>
+/* ── PAGE WRAP ── */
+.page-wrap{max-width:640px;margin:0 auto;padding:0 0 72px;}
+
+/* ── BANNER ── */
+.banner-wrap{
+  width:100%;overflow:hidden;
+  border-radius:0 0 28px 28px;
+  box-shadow:var(--shadow-lg);
+}
+.banner-wrap img{width:100%;display:block;object-fit:cover;}
+
+/* ── WELCOME CARD ── */
+.welcome-card{
+  margin:20px 14px 0;
+  background:var(--bg-card);
+  border-radius:var(--radius);
+  border:1px solid #DDD3BA;
+  padding:28px 22px 24px;
+  box-shadow:var(--shadow-md);
+  text-align:center;
+  position:relative;overflow:hidden;
+  animation:fadeUp .6s ease both;
+}
+.welcome-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:4px;
+  background:linear-gradient(90deg,var(--gold),#E8C042,var(--gold));
+}
+.logo-beat{
+  width:88px;height:88px;
+  border-radius:50%;
+  object-fit:cover;
+  margin:0 auto 16px;
+  display:block;
+  box-shadow:0 0 0 6px rgba(184,134,11,.12),var(--shadow);
+  animation:heartbeat 3.2s ease-in-out infinite;
+}
+@keyframes heartbeat{
+  0%,100%{transform:scale(1);}
+  14%{transform:scale(1.06);}
+  28%{transform:scale(1);}
+  42%{transform:scale(1.04);}
+  56%{transform:scale(1);}
+}
+.welcome-title{
+  font-family:'Playfair Display',serif;
+  font-style:italic;
+  font-size:17px;
+  color:var(--gold);
+  margin-bottom:10px;
+  line-height:1.5;
+}
+.welcome-text{font-size:14.5px;color:var(--text-muted);line-height:1.9;}
+
+/* ── SECTION CARD ── */
+.section-card{
+  margin:18px 14px 0;
+  background:var(--bg-card);
+  border-radius:var(--radius);
+  border:1px solid #DDD3BA;
+  box-shadow:var(--shadow);
+  overflow:hidden;
+  animation:fadeUp .55s ease both;
+}
+.section-card:nth-child(3){animation-delay:.04s;}
+.section-card:nth-child(4){animation-delay:.08s;}
+.section-card:nth-child(5){animation-delay:.12s;}
+.section-card:nth-child(6){animation-delay:.16s;}
+
+.section-header{
+  padding:15px 22px 13px;
+  background:linear-gradient(135deg,#F5EDD8,#FBF7EE);
+  border-bottom:1.5px solid #E0D4BA;
+  display:flex;align-items:center;gap:11px;
+}
+.section-icon{
+  width:36px;height:36px;
+  background:linear-gradient(135deg,var(--gold),var(--gold-light));
+  border-radius:9px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:17px;flex-shrink:0;
+  box-shadow:0 2px 8px rgba(184,134,11,.25);
+}
+.section-title{
+  font-family:'Playfair Display',serif;
+  font-size:17px;font-weight:600;
+  color:var(--primary);
+  letter-spacing:.01em;
+}
+.section-note{
+  font-size:12px;color:var(--text-muted);
+  font-family:'Sarabun',sans-serif;font-weight:400;
+  display:block;margin-top:1px;
+}
+.section-body{padding:20px 22px;}
+
+/* ── FIELDS ── */
+.field-group{margin-bottom:18px;}
+.field-group:last-child{margin-bottom:0;}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+
+label{
+  display:block;font-size:13px;font-weight:600;
+  color:var(--primary);margin-bottom:7px;letter-spacing:.02em;
+}
+label .req{color:#C0392B;margin-left:2px;}
+label .opt{color:var(--text-muted);font-weight:400;font-size:12px;}
+
+.field-desc{
+  font-size:12.5px;color:var(--text-muted);
+  margin-bottom:7px;line-height:1.6;
+}
+
+input[type="text"],input[type="email"],input[type="tel"],
+input[type="date"],select,textarea{
+  width:100%;
+  background:var(--bg-input);
+  border:1.5px solid var(--border);
+  border-radius:var(--radius-sm);
+  padding:11px 14px;
+  font-family:'Sarabun',sans-serif;
+  font-size:15px;color:var(--text);
+  transition:border-color var(--transition),box-shadow var(--transition),background var(--transition);
+  outline:none;appearance:none;-webkit-appearance:none;
+}
+input::placeholder,textarea::placeholder{color:#BBA898;}
+input:focus,select:focus,textarea:focus{
+  border-color:var(--border-focus);
+  box-shadow:0 0 0 4px rgba(184,134,11,.14),0 2px 10px rgba(184,134,11,.08);
+  background:#fff;
+}
+textarea{resize:vertical;min-height:78px;}
+select{
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23B8860B' stroke-width='1.8' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 14px center;
+  padding-right:38px;cursor:pointer;
+}
+
+/* ── RADIO GENDER ── */
+.radio-group{display:flex;gap:10px;flex-wrap:wrap;}
+.radio-option{flex:1;min-width:90px;}
+.radio-option input[type="radio"]{display:none;}
+.radio-option label{
+  display:flex;align-items:center;justify-content:center;gap:6px;
+  padding:10px 10px;
+  border:1.5px solid var(--border);border-radius:var(--radius-sm);
+  cursor:pointer;font-size:14px;font-weight:500;
+  color:var(--text-muted);transition:all var(--transition);
+  margin:0;background:var(--bg-input);
+}
+.radio-option input[type="radio"]:checked+label{
+  border-color:var(--gold);background:var(--gold-pale);
+  color:var(--primary);font-weight:700;
+  box-shadow:0 0 0 3px rgba(184,134,11,.13);
+}
+
+/* ── CHECKBOX CHIPS ── */
+.checkbox-grid{display:flex;flex-wrap:wrap;gap:8px;}
+.checkbox-chip input[type="checkbox"]{display:none;}
+.checkbox-chip label{
+  display:inline-flex;align-items:center;gap:5px;
+  padding:7px 13px;
+  border:1.5px solid var(--border);border-radius:20px;
+  cursor:pointer;font-size:13px;font-weight:400;
+  color:var(--text-muted);transition:all var(--transition);
+  margin:0;background:var(--bg-input);white-space:nowrap;
+}
+.checkbox-chip input[type="checkbox"]:checked+label{
+  border-color:var(--gold);background:var(--gold-pale);
+  color:var(--primary);font-weight:600;
+  box-shadow:0 0 0 2px rgba(184,134,11,.15);
+}
+.checkbox-chip label::before{content:'○';font-size:11px;transition:all var(--transition);}
+.checkbox-chip input[type="checkbox"]:checked+label::before{content:'✓';color:var(--gold);}
+
+/* ── SOURCE CHANNEL DESCRIPTIONS ── */
+.source-desc-box{
+  background:#F5F0E4;border:1px solid #E2D5B8;border-radius:var(--radius-sm);
+  padding:12px 14px;margin-bottom:10px;
+  font-size:13px;color:var(--text-muted);line-height:1.9;
+}
+.source-desc-box p{margin-bottom:2px;}
+.source-desc-box p:last-child{margin-bottom:0;}
+
+/* ── AVATAR UPLOAD ── */
+.avatar-upload{display:flex;flex-direction:column;align-items:center;gap:14px;}
+.avatar-preview{
+  width:120px;height:120px;border-radius:50%;
+  border:3px solid var(--gold-pale);
+  box-shadow:0 0 0 5px rgba(184,134,11,.1),var(--shadow);
+  overflow:hidden;cursor:pointer;transition:all var(--transition);
+  background:var(--bg-input);
+  display:flex;align-items:center;justify-content:center;
+  position:relative;
+}
+.avatar-preview:hover{
+  border-color:var(--gold);
+  box-shadow:0 0 0 6px rgba(184,134,11,.2),var(--shadow-md);
+  transform:scale(1.03);
+}
+.avatar-preview img{width:100%;height:100%;object-fit:cover;display:none;}
+.avatar-placeholder{
+  display:flex;flex-direction:column;align-items:center;gap:4px;
+  color:var(--text-muted);font-size:12px;
+}
+.avatar-placeholder span:first-child{font-size:34px;}
+#avatarInput{display:none;}
+.avatar-hint{font-size:12px;color:var(--text-muted);text-align:center;line-height:1.7;}
+
+/* ── SUBMIT AREA ── */
+.submit-area{margin:20px 14px 0;animation:fadeUp .6s ease .22s both;}
+.pre-submit-text{
+  background:linear-gradient(135deg,#FFF9EE,#F5EDD8);
+  border:1px solid #E0D4BA;border-radius:var(--radius);
+  padding:18px 20px;font-size:14px;color:var(--text-muted);
+  text-align:center;line-height:1.9;margin-bottom:14px;
+}
+.btn-submit{
+  width:100%;padding:17px 24px;
+  background:linear-gradient(135deg,#2C241E 0%,#3E3028 60%,#2C241E 100%);
+  color:#fff;border:none;border-radius:var(--radius);
+  font-family:'Sarabun',sans-serif;font-size:17px;font-weight:700;
+  cursor:pointer;letter-spacing:.04em;
+  transition:all var(--transition);
+  box-shadow:0 6px 24px rgba(44,36,30,.28);
+  position:relative;overflow:hidden;
+}
+.btn-submit::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,transparent 50%,rgba(184,134,11,.18) 100%);
+}
+.btn-submit:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 10px 32px rgba(44,36,30,.35);}
+.btn-submit:active:not(:disabled){transform:translateY(0);}
+.btn-submit:disabled{opacity:.72;cursor:not-allowed;transform:none !important;}
+
+/* ── LOADING OVERLAY ── */
+.loading-overlay{
+  display:none;position:fixed;inset:0;
+  background:rgba(44,36,30,.52);backdrop-filter:blur(5px);
+  z-index:900;align-items:center;justify-content:center;
+  flex-direction:column;gap:18px;
+}
+.loading-overlay.active{display:flex;}
+.spinner{
+  width:52px;height:52px;
+  border:3.5px solid rgba(255,255,255,.2);
+  border-top-color:var(--gold-light);
+  border-radius:50%;animation:spin .85s linear infinite;
+}
+.loading-text{color:#fff;font-size:16px;font-weight:600;text-align:center;line-height:1.5;}
+
+/* ── SUCCESS SCREEN ── */
+#successScreen{
+  display:none;position:fixed;inset:0;
+  background:linear-gradient(160deg,#F5F1E9 0%,#EDE0C8 100%);
+  z-index:1000;align-items:center;justify-content:center;
+  flex-direction:column;gap:0;padding:32px 24px;
+  overflow-y:auto;
+}
+#successScreen.active{display:flex;}
+.success-card{
+  background:var(--bg-card);
+  border-radius:24px;
+  border:1px solid #DDD3BA;
+  box-shadow:0 12px 48px rgba(44,36,30,.15);
+  padding:36px 28px 32px;
+  max-width:480px;width:100%;
+  text-align:center;
+  animation:popIn .7s cubic-bezier(.34,1.56,.64,1) both;
+  position:relative;overflow:hidden;
+}
+.success-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:5px;
+  background:linear-gradient(90deg,var(--gold),#E8C042,var(--gold));
+}
+.success-logo-beat{
+  width:96px;height:96px;border-radius:50%;
+  object-fit:cover;margin:0 auto 20px;display:block;
+  box-shadow:0 0 0 8px rgba(184,134,11,.1),var(--shadow-md);
+  animation:heartbeat 3.2s ease-in-out infinite;
+}
+.success-congrats{
+  font-size:13px;font-weight:600;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--gold);margin-bottom:8px;
+}
+.success-title{
+  font-family:'Playfair Display',serif;
+  font-size:21px;font-weight:600;color:var(--primary);
+  line-height:1.5;margin-bottom:14px;
+}
+.success-divider{
+  width:56px;height:2.5px;margin:0 auto 18px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+  border-radius:2px;
+}
+.success-body{
+  font-size:14.5px;color:var(--text-muted);
+  line-height:1.9;margin-bottom:20px;
+}
+.success-body strong{color:var(--primary);font-weight:700;}
+.success-footer{
+  font-size:13px;color:#A09080;
+  background:#F5F0E8;border-radius:12px;
+  padding:12px 16px;line-height:1.7;
+}
+
+/* ── VALIDATION ── */
+.field-error{font-size:12px;color:#C0392B;margin-top:5px;display:none;}
+.field-error.visible{display:block;}
+input.invalid,textarea.invalid,select.invalid{
+  border-color:#E74C3C !important;
+  box-shadow:0 0 0 3px rgba(231,76,60,.1) !important;
+}
+.contact-warning{
+  background:#FFF5F5;border:1px solid #FDDCDC;
+  border-radius:var(--radius-sm);padding:10px 14px;
+  font-size:13px;color:#C0392B;margin-top:8px;display:none;
+}
+.contact-warning.visible{display:block;}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px);}to{opacity:1;transform:translateY(0);}}
+@keyframes spin{to{transform:rotate(360deg);}}
+@keyframes popIn{from{opacity:0;transform:scale(.6);}to{opacity:1;transform:scale(1);}}
+
+/* ── MOBILE ── */
+@media(max-width:480px){
+  .field-row{grid-template-columns:1fr;}
+  .section-body{padding:16px 14px;}
+  .section-header{padding:13px 14px 11px;}
+  .welcome-card,.section-card,.submit-area{margin-left:10px;margin-right:10px;}
+  .welcome-card{padding:22px 16px 20px;}
+  .btn-submit{font-size:15px;padding:15px 18px;}
+  .success-card{padding:28px 18px 24px;}
+}
+</style>
 </head>
 <body>
-    <div class="banner-container"><img src="https://github.com/NexusLifeChurch/NxLife_Mbr_Regist/blob/main/images/Logo/banner_alpha.jpg?raw=true" alt="Nexus Life Banner"></div>
-    <div class="container" id="form-container">
-        
-        <div class="floating-intro">
-            <img src="https://github.com/NexusLifeChurch/NxLife_Mbr_Regist/blob/main/images/Logo/life_logo.png?raw=true" alt="Logo" class="intro-logo pulse-logo">
-            <div class="intro-sub">✨เพราะพระเจ้าทรงนำ เราจึงได้พบกัน✨</div>
-            <h1>🌿ลงทะเบียน Nexus Life🌿</h1>
-            <p>เพียงกรอกข้อมูลด้านล่าง 
-ก็เริ่มต้นเชื่อมโยงสายใยแห่งมิตรภาพและความรัก 
-ในพื้นที่ปลอดภัย 💖 ในครอบครัวแห่งพระคุณ 
-ที่ ที่ท่านสามารถเป็นตัวของตัวเองได้..อย่างสบายใจ 🤗</p>
-        </div>
 
-        <form id="nexusForm">
-            <!-- 📄 ข้อมูลส่วนตัว -->
-            <div class="form-card">
-                <div class="card-title">📄 ข้อมูลส่วนตัว</div>
-                <div class="form-group"><label>ชื่อ *</label><input type="text" id="firstName" placeholder="ระบุชื่อจริงของคุณ" required></div>
-                <div class="form-group"><label>นามสกุล *</label><input type="text" id="lastName" placeholder="ระบุนามสกุลของคุณ" required></div>
-                <div class="form-group"><label>ชื่อเล่น</label><input type="text" id="nickname" placeholder="ชื่อที่คุณอยากให้เราเรียก"></div>
-                <div class="form-group"><label>เพศ *</label><div class="radio-btn-group">
-                    <div class="radio-btn"><input type="radio" name="gender" value="ชาย" id="m" required><label for="m">ชาย</label></div>
-                    <div class="radio-btn"><input type="radio" name="gender" value="หญิง" id="f"><label for="f">หญิง</label></div>
-                </div></div>
-                <div class="form-group">
-                    <label>วันเดือนปีเกิด *</label>
-                    <input type="text" id="birthDate" placeholder="กดเพื่อใช้ตัวช่วยระบุวันที่" onfocus="(this.type='date')" onblur="(this.value==''?this.type='text':this.type='date')" required>
-                </div>
-            </div>
+<!-- LOADING -->
+<div class="loading-overlay" id="loadingOverlay">
+  <div class="spinner"></div>
+  <div class="loading-text">กำลังเชื่อมโยงสายใยแห่งรัก... ⏳<br><span style="font-size:13px;font-weight:400;opacity:.85">กรุณารอสักครู่ 🙏</span></div>
+</div>
 
-            <!-- 📞 ข้อมูลสำหรับติดต่อ -->
-            <div class="form-card">
-                <div class="card-title">📞 ข้อมูลสำหรับติดต่อ</div>
-                <div class="form-group"><label>เบอร์โทรศัพท์ติดต่อ *</label><input type="tel" id="phone" placeholder="000-000-0000" class="phone-format" required></div>
-                <div class="form-group"><label>Line ID</label><input type="text" id="lineId" placeholder="ระบุ ID เพื่อเพิ่มเป็นเพื่อนกันใน Line"></div>
-                <div class="form-group"><label>Email</label><input type="email" id="email" placeholder="example@email.com"></div>
-                <div class="form-group">
-                    <label>ช่องทางติดต่ออื่นๆ (เช่น Facebook Messenger ฯลฯ)</label>
-                    <input type="text" id="contactChannel" placeholder="ระบุ ชื่อ/Link/ID">
-                </div>
-                <div class="form-group"><label>ที่อยู่สำหรับส่งเอกสาร/ของรางวัล *</label><textarea id="shippingAddress" rows="3" placeholder="ระบุที่อยู่ให้ชัดเจน (บ้านเลขที่, ถนน, ตำบล, อำเภอ, จังหวัด, รหัสไปรษณีย์) สำหรับจัดส่งของรางวัล 🎁" required></textarea></div>
-                <div class="form-group"><label>เบอร์โทรสำหรับขนส่งพัสดุ *</label><input type="tel" id="shippingPhone" placeholder="000-000-0000" class="phone-format" required></div>
-            </div>
-
-            <!-- 💛 เรื่องราวความเชื่อ -->
-            <div class="form-card">
-                <div class="card-title">💛 เรื่องราวความเชื่อ</div>
-                <div class="form-group">
-                    <label>คุณเป็นคริสเตียนแล้วหรือยังคะ? ✨</label>
-                    <div class="hint-box small">
-                        ❌ ถ้ายังไม่ได้เป็นคริสเตียน... รบกวนระบุว่า "ยังไม่ได้เป็นคริสเตียน"<br><br>
-                        ✅ ถ้าเป็นคริสเตียนแล้ว... ให้ระบุวันที่รับเชื่อ (ถ้าจำไม่ได้แน่นอน ให้ระบุช่วงเวลาก็ได้ค่ะ เช่น “ปี 2020” หรือ “ตอนอยู่ ม.5")
-                    </div>
-                    <textarea id="believeDate" rows="2" placeholder="วันเดือนปี ที่รับเชื่อ" required></textarea>
-                </div>
-                <div class="form-group">
-                    <label>ได้รับบัพติสมาในน้ำแล้วหรือยังคะ? 💧</label>
-                    <div class="hint-box small">
-                        ❌ ถ้ายังไม่ได้รับ... ให้ตอบว่า "ยังไม่ได้รับ"<br><br>
-                        ✅ ถ้าเคยรับแล้ว... รบกวนระบุ วันที่หรือช่วงเวลาที่รับ (เท่าที่จำได้) นะคะ/ครับ 🙏 <br>เช่น “ปี 2021”, “ตอนขึ้น ม.6”, หรือ “วันที่ 10 ต.ค. 2020”
-                    </div>
-                    <textarea id="baptismDate" rows="2" placeholder="วันเดือนปีที่รับบัพติสมาฯ" required></textarea>
-                </div>
-                <div class="form-group"><label>คริสตจักรที่เป็นสมาชิกอยู่</label><input type="text" id="oldChurch" value="ไม่ได้เป็นสมาชิกคริสตจักรใด"></div>
-                
-                <div class="form-group">
-                    <label>รู้จัก Nexus Life ผ่านทางช่องทางใด *</label>
-                    <div class="hint-box small">
-                        💻 สื่อออนไลน์ – เช่น Facebook, YouTube, TikTok ฯลฯ<br>
-                        👩 สายสัมพันธ์ Nexus – การแนะนำจาก เพื่อน, พี่น้อง, ญาติมิตร ที่อยู่ในคณะ Nexus<br>
-                        👩 สายสัมพันธ์ อื่น – การแนะนำจาก เพื่อน, พี่น้อง, ญาติมิตร ฯลฯ<br>
-                        🏦 พันธมิตร – การแนะนำจาก หน่วยงานหรือองค์กรต่างๆ เช่น CGN, Jesus.net, Realfriend<br>
-                        🎓 กลุ่ม Alpha – รู้จักผ่านการอบรมหลักสูตร Alpha
-                    </div>
-                    <select id="sourceChannel" required onchange="toggleOtherSource()">
-                        <option value="">-- แตะเพื่อเลือก 1 ช่องทาง --</option>
-                        <option value="สื่อออนไลน์">💻 สื่อออนไลน์</option>
-                        <option value="สายสัมพันธ์-Nexus">👩 สายสัมพันธ์ Nexus</option>
-                        <option value="สายสัมพันธ์-อื่น">👩 สายสัมพันธ์ อื่น</option>
-                        <option value="พันธมิตร">🏦 พันธมิตร</option>
-                        <option value="กลุ่ม Alpha">🎓 กลุ่ม Alpha</option>
-                        <option value="อื่นๆ">📝 อื่นๆ</option>
-                    </select>
-                    <input type="text" id="otherSourceInput" placeholder="โปรดระบุ (เช่น งานสัมมนา, กิจกรรมอาสาสมัคร)" style="display:none; margin-top: 8px;">
-                </div>
-
-                <div class="form-group">
-                    <label>สิ่งที่สนใจหรือต้องการ ใน NxLife</label>
-                    <div class="hint-box small" style="margin-bottom: 6px;">💡 ระบุได้มากกว่า 1 ข้อ</div>
-                    <div class="check-group">
-                        <label class="check-item"><input type="checkbox" name="interest" value="อยากรู้จักพระเจ้า"> อยากรู้จักพระเจ้า</label>
-                        <label class="check-item"><input type="checkbox" name="interest" value="ต้องการคำอธิษฐานเผื่อ"> ต้องการคำอธิษฐานเผื่อ</label>
-                        <label class="check-item"><input type="checkbox" name="interest" value="ต้องการคำปรึกษาคำแนะนำ"> ต้องการคำปรึกษาคำแนะนำ</label>
-                        <label class="check-item"><input type="checkbox" name="interest" value="อยากเติบโตหรือเริ่มต้นใหม่"> อยากเติบโตหรือเริ่มต้นใหม่</label>
-                        <label class="check-item"><input type="checkbox" name="interest" value="เข้าร่วมกิจกรรม Alpha"> เข้าร่วมกิจกรรม Alpha</label>
-                        <label class="check-item"><input type="checkbox" name="interest" value="เข้าร่วมกลุ่ม Care"> เข้าร่วมกลุ่ม Care</label>
-                        <label class="check-item"><input type="checkbox" name="interest" value="เข้าร่วมโบสถ์ออนไลน์"> เข้าร่วมโบสถ์ออนไลน์</label>
-                        <label class="check-item"><input type="checkbox" name="interest" value="อยากเรียนพระคัมภีร์ ออนไลน์"> อยากเรียนพระคัมภีร์ ออนไลน์</label>
-                        <label class="check-item"><input type="checkbox" name="interest" value="อยากสนับสนุนงานคริสตจักร"> อยากสนับสนุนงานคริสตจักร</label>
-                        <label class="check-item"><input type="checkbox" id="chkOtherInterest" value="อื่นๆ"> อื่นๆ</label>
-                        <input type="text" id="otherInterestInput" placeholder="โปรดระบุ" style="display:none; margin-top: 8px;">
-                    </div>
-                </div>
-            </div>
-
-            <!-- 📸 แนบรูปภาพ -->
-            <div class="form-card">
-                <div class="card-title">📸 แนบรูปภาพ Profile</div>
-                <div class="upload-area" onclick="document.getElementById('fileInput').click()">
-                    <span id="uploadText">📸 แตะเพื่อแนบรูปภาพ หรือถ่ายรูป</span>
-                    <img id="preview">
-                    <input type="file" id="fileInput" style="display:none" accept="image/*">
-                </div>
-            </div>
-
-            <div class="submit-section">
-                <p class="submit-note">ก่อนกด ลงทะเบียน…<br>✨ ส่งยิ้มหวาน ๆ พร้อมหัวใจที่อบอุ่นให้กันสักนิด 💖<br>แล้วค่อยๆ แตะที่ปุ่ม "ส่งความรักและลงทะเบียน" อย่างแผ่วเบา…</p>
-                <button type="submit" class="btn-submit" id="submitBtn">✨ส่งความรักและลงทะเบียน</button>
-            </div>
-        </form>
-        <div class="footer-text">Form Register Version 2.2.1 By NxLife_DBMS+</div>
+<!-- SUCCESS -->
+<div id="successScreen">
+  <div class="success-card">
+    <img class="success-logo-beat"
+      src="https://github.com/NexusLifeChurch/NxLife_Mbr_Regist/blob/main/images/Logo/banner_alpha.jpg?raw=true"
+      alt="NxLife Logo"/>
+    <div class="success-congrats">🌿 Welcome to the Family</div>
+    <div class="success-title">เราได้รับข้อมูลของท่านแล้ว<br>และขอต้อนรับสู่ครอบครัว Nexus Life</div>
+    <div class="success-divider"></div>
+    <div class="success-body">
+      เรื่องราวความทรงจำ ระหว่าง <strong>"ท่านกับพระเจ้า และพวกเรา"</strong><br>
+      ได้เริ่มต้นขึ้นแล้ว!! ✨💛
     </div>
-
-    <!-- 🎉 Success Screen -->
-    <div class="container" id="success-screen">
-        <div class="floating-intro">
-            <img src="https://github.com/NexusLifeChurch/NxLife_Mbr_Regist/blob/main/images/Logo/life_logo.png?raw=true" class="success-logo pulse-logo">
-            <h2 style="color: var(--accent-gold); margin-bottom: 12px; font-size: 1.3rem;">🌿 ขอต้อนรับสู่ครอบครัว Nexus Life 🌿</h2>
-            <p style="font-size: 1rem; color: var(--primary-dark); font-weight: 500; line-height: 1.8; text-align: center;">
-                เรื่องราวความทรงจำ<br>ระหว่าง <strong>“ท่านกับพระเจ้า และพวกเรา”</strong><br>ได้เริ่มต้นขึ้นแล้ว!! ✨💛<br><br>
-                หากท่านต้องการสอบถาม หรือมีข้อเสนอแนะ<br>สามารถติดต่อผู้แนะนำหรือหัวหน้าแคร์ได้เลยจ้า 😊🙏
-            </p>
-        </div>
-        <div class="footer-text">Form Register Version 2.2.1 By NxLife_DBMS+</div>
+    <div class="success-footer">
+      หากท่านต้องการสอบถาม หรือมีข้อเสนอแนะ<br>
+      สามารถติดต่อผู้แนะนำหรือหัวหน้าแคร์ได้เลยจ้า 😊🙏
     </div>
+  </div>
+</div>
 
-    <script>
-        let base64String = ""; let mimeType = "";
+<!-- MAIN FORM -->
+<div class="page-wrap" id="mainForm">
 
-        document.querySelectorAll('.phone-format').forEach(i => { 
-            i.addEventListener('input', e => { 
-                let x = e.target.value.replace(/\D/g, '').match(/(\d{0,3})(\d{0,3})(\d{0,4})/); 
-                e.target.value = !x[2] ? x[1] : x[1] + '-' + x[2] + (x[3] ? '-' + x[3] : ''); 
-            }); 
-        });
+  <!-- Banner -->
+  <div class="banner-wrap">
+    <img src="https://github.com/NexusLifeChurch/NxLife_Mbr_Regist/blob/main/images/Logo/banner_alpha.jpg?raw=true" alt="NxLife Banner"/>
+  </div>
 
-        function toggleOtherSource() {
-            var val = document.getElementById('sourceChannel').value;
-            document.getElementById('otherSourceInput').style.display = (val === 'อื่นๆ') ? 'block' : 'none';
-        }
+  <!-- Welcome -->
+  <div class="welcome-card">
+    <img class="logo-beat"
+      src="https://github.com/NexusLifeChurch/NxLife_Mbr_Regist/blob/main/images/Logo/banner_alpha.jpg?raw=true"
+      alt="NxLife Logo"/>
+    <div class="welcome-title">✨ เพราะพระเจ้าทรงนำ เราจึงได้พบกัน ✨</div>
+    <p class="welcome-text">
+      เพียงกรอกข้อมูลด้านล่าง ก็เริ่มต้นเชื่อมโยงสายใยแห่งมิตรภาพและความรัก
+      ในพื้นที่ปลอดภัย 💖 ในครอบครัวแห่งพระคุณ
+      ที่ท่านสามารถเป็นตัวของตัวเองได้อย่างสบายใจ 🤗
+    </p>
+  </div>
 
-        document.getElementById('chkOtherInterest').addEventListener('change', function() {
-            document.getElementById('otherInterestInput').style.display = this.checked ? 'block' : 'none';
-        });
+  <!-- ══ SECTION 1: ข้อมูลส่วนตัว ══ -->
+  <div class="section-card">
+    <div class="section-header">
+      <div class="section-icon">👤</div>
+      <div>
+        <div class="section-title">ข้อมูลส่วนตัว</div>
+      </div>
+    </div>
+    <div class="section-body">
 
-        // 🎯 อัปเกรด Image Compressor: ตัด header ส่วนเกินของ base64 ที่ทำให้ GAS เออเร่อออกไป
-        document.getElementById('fileInput').addEventListener('change', e => { 
-            const f = e.target.files[0]; 
-            if (f) { 
-                const btn = document.getElementById('submitBtn');
-                btn.disabled = true; // ล็อกปุ่มกันกดย้ำตอนรูปกำลังย่อ
-                btn.innerText = "กำลังประมวลผลรูปภาพ... ⏳";
-                
-                mimeType = 'image/jpeg'; // บังคับเซฟเป็น JPEG ให้ไฟล์เล็กสุด
-                const reader = new FileReader(); 
-                reader.readAsDataURL(f);
-                reader.onload = ev => { 
-                    const img = new Image();
-                    img.src = ev.target.result;
-                    img.onload = () => {
-                        const canvas = document.createElement('canvas');
-                        const MAX_WIDTH = 800; // ลดขนาดความกว้าง
-                        let scaleSize = 1;
-                        if (img.width > MAX_WIDTH) { scaleSize = MAX_WIDTH / img.width; }
-                        canvas.width = img.width * scaleSize;
-                        canvas.height = img.height * scaleSize;
-                        
-                        const ctx = canvas.getContext('2d');
-                        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-                        
-                        const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.7);
-                        // ดึงข้อมูล Base64 เฉพาะเนื้อไฟล์เพียวๆ
-                        base64String = compressedDataUrl.replace(/^data:image\/(png|jpeg|webp);base64,/, "");
-                        
-                        document.getElementById('preview').src = compressedDataUrl; 
-                        document.getElementById('preview').style.display = 'block'; 
-                        document.getElementById('uploadText').style.display = 'none'; 
-                        
-                        btn.disabled = false;
-                        btn.innerText = "✨ส่งความรักและลงทะเบียน";
-                    }
-                }; 
-            } 
-        });
+      <div class="field-row">
+        <div class="field-group">
+          <label for="firstName">ชื่อ<span class="req">*</span></label>
+          <input type="text" id="firstName" placeholder="ชื่อจริง"/>
+          <div class="field-error" id="err-firstName">กรุณากรอกชื่อ</div>
+        </div>
+        <div class="field-group">
+          <label for="lastName">นามสกุล<span class="req">*</span></label>
+          <input type="text" id="lastName" placeholder="นามสกุล"/>
+          <div class="field-error" id="err-lastName">กรุณากรอกนามสกุล</div>
+        </div>
+      </div>
 
-        document.getElementById('nexusForm').addEventListener('submit', e => {
-            e.preventDefault(); 
-            const b = document.getElementById('submitBtn'); 
-            b.innerText = "กำลังเชื่อมโยงสายใยแห่งรัก... ⏳"; 
-            b.disabled = true;
+      <div class="field-group">
+        <label for="nickname">ชื่อเล่น<span class="req">*</span></label>
+        <input type="text" id="nickname" placeholder="ชื่อเล่น"/>
+        <div class="field-error" id="err-nickname">กรุณากรอกชื่อเล่น</div>
+      </div>
 
-            let finalSource = document.getElementById('sourceChannel').value;
-            if(finalSource === 'อื่นๆ') {
-                finalSource = "อื่นๆ: " + document.getElementById('otherSourceInput').value;
-            }
+      <div class="field-group">
+        <label>เพศ<span class="req">*</span></label>
+        <div class="radio-group">
+          <div class="radio-option">
+            <input type="radio" name="gender" id="gMale" value="ชาย"/>
+            <label for="gMale">♂ ชาย</label>
+          </div>
+          <div class="radio-option">
+            <input type="radio" name="gender" id="gFemale" value="หญิง"/>
+            <label for="gFemale">♀ หญิง</label>
+          </div>
+          <div class="radio-option">
+            <input type="radio" name="gender" id="gOther" value="ไม่ต้องการระบุ"/>
+            <label for="gOther">ไม่ต้องการระบุ</label>
+          </div>
+        </div>
+        <div class="field-error" id="err-gender">กรุณาเลือกเพศ</div>
+      </div>
 
-            const interests = []; 
-            document.querySelectorAll('input[name="interest"]:checked').forEach(c => interests.push(c.value));
-            if(document.getElementById('chkOtherInterest').checked && document.getElementById('otherInterestInput').value) {
-                interests.push("อื่นๆ: " + document.getElementById('otherInterestInput').value);
-            }
+      <div class="field-group">
+        <label for="birthDate">วันเกิด<span class="req">*</span></label>
+        <div class="field-desc">📅 กดเลือกจากตัวช่วยวันที่ (รูปแบบ วัน เดือน ปี ค.ศ.)</div>
+        <input type="date" id="birthDate"/>
+        <div class="field-error" id="err-birthDate">กรุณาเลือกวันเกิด</div>
+      </div>
 
-            const payload = { 
-                firstName: document.getElementById('firstName').value, 
-                lastName: document.getElementById('lastName').value, 
-                nickname: document.getElementById('nickname').value, 
-                gender: document.querySelector('input[name="gender"]:checked').value, 
-                birthDate: document.getElementById('birthDate').value, 
-                profileBase64: base64String, 
-                mimeType: mimeType || 'image/jpeg',
-                believeDate: document.getElementById('believeDate').value, 
-                baptismDate: document.getElementById('baptismDate').value, 
-                oldChurch: document.getElementById('oldChurch').value, 
-                sourceChannel: finalSource, 
-                interest: interests.join(', '), 
-                phone: document.getElementById('phone').value, 
-                lineId: document.getElementById('lineId').value, 
-                email: document.getElementById('email').value, 
-                contactChannel: document.getElementById('contactChannel').value, 
-                shippingAddress: document.getElementById('shippingAddress').value, 
-                shippingPhone: document.getElementById('shippingPhone').value 
-            };
+    </div>
+  </div>
 
-            const scriptURL = 'https://script.google.com/macros/s/AKfycbwZvScT487zNtNHIRbkBbSV1bklJqx2plme0bcJKyo24KmFQbe1SS0lUFFQbmgZo8zWjw/exec';
+  <!-- ══ SECTION 2: ข้อมูลติดต่อ ══ -->
+  <div class="section-card">
+    <div class="section-header">
+      <div class="section-icon">📞</div>
+      <div>
+        <div class="section-title">ข้อมูลติดต่อ</div>
+        <span class="section-note">⚠️ ต้องกรอกอย่างน้อย 1 ช่องทาง (เบอร์โทร, Line ID หรือ Email)</span>
+      </div>
+    </div>
+    <div class="section-body">
 
-            fetch(scriptURL, { 
-                method: 'POST', 
-                body: JSON.stringify(payload),
-                headers: { 'Content-Type': 'text/plain;charset=utf-8' }
-            })
-            .then(() => { 
-                document.getElementById('form-container').style.display = 'none'; 
-                document.getElementById('success-screen').style.display = 'block'; 
-                window.scrollTo(0, 0); 
-            })
-            .catch(err => { 
-                alert("เกิดข้อผิดพลาด: " + err.message); 
-                b.disabled = false; 
-                b.innerText = "✨ส่งความรักและลงทะเบียน"; 
-            });
-        });
-    </script>
+      <div class="contact-warning" id="contactWarning">
+        ❗ กรุณากรอกช่องทางติดต่ออย่างน้อย 1 ช่องทาง (เบอร์โทร, Line ID หรือ Email)
+      </div>
+
+      <div class="field-row">
+        <div class="field-group">
+          <label for="phone">เบอร์โทร</label>
+          <input type="tel" id="phone" placeholder="0XX-XXX-XXXX"/>
+        </div>
+        <div class="field-group">
+          <label for="lineId">Line ID</label>
+          <input type="text" id="lineId" placeholder="@line_id หรือ ชื่อไลน์"/>
+        </div>
+      </div>
+
+      <div class="field-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" placeholder="example@email.com"/>
+      </div>
+
+      <div class="field-group">
+        <label for="contactChannel">ช่องทางติดต่ออื่นๆ <span class="opt">(ถ้ามี)</span></label>
+        <div class="field-desc">เช่น Facebook: ชื่อบัญชี, Instagram: @username, X (Twitter): @handle</div>
+        <input type="text" id="contactChannel" placeholder="เช่น Facebook: สมชาย ใจดี / IG: @somchai"/>
+      </div>
+
+      <div class="field-group">
+        <label for="shippingAddress">ที่อยู่จัดส่งเอกสาร/ของรางวัล <span class="opt">(ไม่บังคับ)</span></label>
+        <div class="field-desc">กรุณาระบุให้ชัดเจน เช่น บ้านเลขที่ ซอย/ถนน แขวง/ตำบล เขต/อำเภอ จังหวัด รหัสไปรษณีย์</div>
+        <textarea id="shippingAddress" placeholder="123/4 ซ.สุขุมวิท 10 ถ.สุขุมวิท แขวงคลองเตย เขตคลองเตย กรุงเทพฯ 10110" rows="3"></textarea>
+      </div>
+
+      <div class="field-group">
+        <label for="shippingPhone">เบอร์โทรสำหรับขนส่ง <span class="opt">(ถ้าต่างจากเบอร์หลัก)</span></label>
+        <input type="tel" id="shippingPhone" placeholder="0XX-XXX-XXXX"/>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══ SECTION 3: เรื่องราวความเชื่อ ══ -->
+  <div class="section-card">
+    <div class="section-header">
+      <div class="section-icon">✝️</div>
+      <div>
+        <div class="section-title">เรื่องราวความเชื่อ</div>
+      </div>
+    </div>
+    <div class="section-body">
+
+      <div class="field-group">
+        <label for="believeDate">วันที่รับเชื่อ<span class="req">*</span></label>
+        <textarea id="believeDate" rows="2"
+          placeholder="เช่น มกราคม 2020 / ช่วงวัยเด็ก / ยังไม่แน่ใจ / ยังไม่ได้เป็นคริสเตียน"></textarea>
+        <div class="field-error" id="err-believeDate">กรุณากรอกข้อมูลวันที่รับเชื่อ</div>
+      </div>
+
+      <div class="field-group">
+        <label for="baptismDate">วันที่รับบัพติสมาในน้ำ <span class="opt">(ถ้ามี — ไม่บังคับ)</span></label>
+        <textarea id="baptismDate" rows="2"
+          placeholder="เช่น กุมภาพันธ์ 2021 / ยังไม่ได้รับบัพติสมา"></textarea>
+      </div>
+
+      <div class="field-group">
+        <label for="oldChurch">คริสตจักรเดิม<span class="req">*</span></label>
+        <input type="text" id="oldChurch" placeholder="ไม่ได้เป็นสมาชิกคริสตจักรใด"/>
+        <div class="field-error" id="err-oldChurch">กรุณากรอกข้อมูลคริสตจักรเดิม</div>
+      </div>
+
+      <div class="field-group">
+        <label for="sourceChannel">รู้จัก NxLife ผ่านช่องทางใด<span class="req">*</span></label>
+        <div class="source-desc-box">
+          <p>💻 <strong>สื่อออนไลน์</strong> – เช่น Facebook, YouTube, TikTok ฯลฯ</p>
+          <p>👩‍👧 <strong>สายสัมพันธ์ Nexus</strong> – การแนะนำจาก เพื่อน, พี่น้อง, ญาติมิตร ที่อยู่ในคณะ Nexus</p>
+          <p>🤝 <strong>สายสัมพันธ์ อื่น</strong> – การแนะนำจาก เพื่อน, พี่น้อง, ญาติมิตร ฯลฯ</p>
+          <p>🏦 <strong>พันธมิตร</strong> – การแนะนำจากหน่วยงานหรือองค์กรต่างๆ เช่น CGN, Jesus.net, Realfriend</p>
+          <p>🎓 <strong>กลุ่ม Alpha</strong> – รู้จักผ่านการอบรมหลักสูตร Alpha</p>
+        </div>
+        <select id="sourceChannel">
+          <option value="" disabled selected>— เลือกช่องทาง —</option>
+          <option value="สื่อออนไลน์">💻 สื่อออนไลน์</option>
+          <option value="สายสัมพันธ์-Nexus">👩‍👧 สายสัมพันธ์ — Nexus</option>
+          <option value="สายสัมพันธ์-อื่น">🤝 สายสัมพันธ์ — อื่นๆ</option>
+          <option value="พันธมิตร">🏦 พันธมิตร</option>
+          <option value="กลุ่ม Alpha">🎓 กลุ่ม Alpha</option>
+          <option value="อื่นๆ">อื่นๆ</option>
+        </select>
+        <div class="field-error" id="err-sourceChannel">กรุณาเลือกช่องทาง</div>
+      </div>
+
+      <div class="field-group">
+        <label>สิ่งที่สนใจ<span class="req">*</span></label>
+        <div class="checkbox-grid" id="interestGrid">
+          <div class="checkbox-chip"><input type="checkbox" id="i1" value="อยากรู้จักพระเจ้า"/><label for="i1">อยากรู้จักพระเจ้า</label></div>
+          <div class="checkbox-chip"><input type="checkbox" id="i2" value="ต้องการคำอธิษฐานเผื่อ"/><label for="i2">ต้องการคำอธิษฐานเผื่อ</label></div>
+          <div class="checkbox-chip"><input type="checkbox" id="i3" value="ต้องการคำปรึกษา"/><label for="i3">ต้องการคำปรึกษา</label></div>
+          <div class="checkbox-chip"><input type="checkbox" id="i4" value="อยากเริ่มต้นใหม่"/><label for="i4">อยากเริ่มต้นใหม่</label></div>
+          <div class="checkbox-chip"><input type="checkbox" id="i5" value="กิจกรรม Alpha"/><label for="i5">กิจกรรม Alpha</label></div>
+          <div class="checkbox-chip"><input type="checkbox" id="i6" value="กลุ่ม Care"/><label for="i6">กลุ่ม Care</label></div>
+          <div class="checkbox-chip"><input type="checkbox" id="i7" value="โบสถ์ออนไลน์"/><label for="i7">โบสถ์ออนไลน์</label></div>
+          <div class="checkbox-chip"><input type="checkbox" id="i8" value="เรียนพระคัมภีร์"/><label for="i8">เรียนพระคัมภีร์</label></div>
+          <div class="checkbox-chip"><input type="checkbox" id="i9" value="สนับสนุนงาน"/><label for="i9">สนับสนุนงาน</label></div>
+          <div class="checkbox-chip"><input type="checkbox" id="i10" value="อื่นๆ"/><label for="i10">อื่นๆ</label></div>
+        </div>
+        <div class="field-error" id="err-interest">กรุณาเลือกอย่างน้อย 1 สิ่งที่สนใจ</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══ SECTION 4: รูปโปรไฟล์ ══ -->
+  <div class="section-card">
+    <div class="section-header">
+      <div class="section-icon">📸</div>
+      <div>
+        <div class="section-title">รูปโปรไฟล์</div>
+        <span class="section-note">ไม่บังคับ — ถ้าไม่มีจะใช้โลโก้ NxLife แทน</span>
+      </div>
+    </div>
+    <div class="section-body">
+      <div class="avatar-upload">
+        <div class="avatar-preview" id="avatarPreview" onclick="document.getElementById('avatarInput').click()">
+          <img id="avatarImg" src="" alt="Profile Preview"/>
+          <div class="avatar-placeholder" id="avatarPlaceholder">
+            <span>📷</span>
+            <span>แตะเพื่อเลือกรูป</span>
+          </div>
+        </div>
+        <input type="file" id="avatarInput" accept="image/*" onchange="handleAvatar(event)"/>
+        <div class="avatar-hint">
+          รองรับ JPG, PNG, WEBP<br/>
+          <span style="font-size:11px;color:#A09080;">รูปจะถูกย่อขนาดอัตโนมัติก่อนอัปโหลด (≤ 1 MB)</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Submit -->
+  <div class="submit-area">
+    <div class="pre-submit-text">
+      ก่อนกด ลงทะเบียน… ✨<br/>
+      ส่งยิ้มหวาน ๆ พร้อมหัวใจที่อบอุ่นให้กันสักนิด 💖<br/>
+      แล้วค่อยๆ แตะที่ปุ่ม "ส่งความรักและลงทะเบียน" อย่างแผ่วเบา…
+    </div>
+    <button class="btn-submit" id="submitBtn" onclick="submitForm()">
+      💌 ส่งความรักและลงทะเบียน
+    </button>
+  </div>
+
+</div><!-- /page-wrap -->
+
+<script>
+// ── CONFIG ────────────────────────────────────────────────────
+const GAS_URL = "YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE";
+
+// ── AVATAR: compress → base64 ─────────────────────────────────
+let avatarBase64 = "";
+
+function handleAvatar(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+
+  const MAX_SIZE = 1024 * 1024; // 1 MB target
+  const MAX_DIM  = 1200;        // px
+
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    const img = new Image();
+    img.onload = () => {
+      // Calculate dimensions
+      let w = img.width, h = img.height;
+      if (w > MAX_DIM || h > MAX_DIM) {
+        if (w > h) { h = Math.round(h * MAX_DIM / w); w = MAX_DIM; }
+        else        { w = Math.round(w * MAX_DIM / h); h = MAX_DIM; }
+      }
+
+      const canvas = document.createElement('canvas');
+      canvas.width = w; canvas.height = h;
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(img, 0, 0, w, h);
+
+      // Try quality 0.85, drop to 0.70 if still > 1MB
+      let quality = 0.85;
+      let b64 = canvas.toDataURL('image/jpeg', quality);
+      if (b64.length * .75 > MAX_SIZE) b64 = canvas.toDataURL('image/jpeg', 0.70);
+      if (b64.length * .75 > MAX_SIZE) b64 = canvas.toDataURL('image/jpeg', 0.55);
+
+      avatarBase64 = b64;
+      document.getElementById('avatarImg').src = b64;
+      document.getElementById('avatarImg').style.display = 'block';
+      document.getElementById('avatarPlaceholder').style.display = 'none';
+    };
+    img.src = e.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+
+// ── COLLECT INTERESTS ─────────────────────────────────────────
+function getInterests() {
+  return [...document.querySelectorAll('#interestGrid input:checked')]
+    .map(cb => cb.value).join(', ');
+}
+
+// ── VALIDATE ──────────────────────────────────────────────────
+function clearErr(id, errId) {
+  const el = document.getElementById(id);
+  const er = document.getElementById(errId);
+  if (el && el.value.trim()) { el.classList.remove('invalid'); er && er.classList.remove('visible'); }
+}
+
+function validateForm() {
+  let ok = true;
+
+  // Required text fields
+  [['firstName','err-firstName'],['lastName','err-lastName'],['nickname','err-nickname'],
+   ['birthDate','err-birthDate'],['believeDate','err-believeDate'],
+   ['oldChurch','err-oldChurch'],['sourceChannel','err-sourceChannel']
+  ].forEach(([id, errId]) => {
+    const el = document.getElementById(id);
+    const er = document.getElementById(errId);
+    if (!el.value.trim()) {
+      el.classList.add('invalid'); er && er.classList.add('visible'); ok = false;
+    } else {
+      el.classList.remove('invalid'); er && er.classList.remove('visible');
+    }
+  });
+
+  // Gender
+  const gender = document.querySelector('input[name="gender"]:checked');
+  const errG = document.getElementById('err-gender');
+  if (!gender) { errG.classList.add('visible'); ok = false; }
+  else          { errG.classList.remove('visible'); }
+
+  // Interest (at least 1)
+  const interests = getInterests();
+  const errI = document.getElementById('err-interest');
+  if (!interests) { errI.classList.add('visible'); ok = false; }
+  else            { errI.classList.remove('visible'); }
+
+  // Contact (at least 1 of phone/lineId/email)
+  const phone = document.getElementById('phone').value.trim();
+  const lineId = document.getElementById('lineId').value.trim();
+  const email  = document.getElementById('email').value.trim();
+  const cw = document.getElementById('contactWarning');
+  if (!phone && !lineId && !email) { cw.classList.add('visible'); ok = false; }
+  else                              { cw.classList.remove('visible'); }
+
+  return ok;
+}
+
+// ── SUBMIT ────────────────────────────────────────────────────
+async function submitForm() {
+  if (!validateForm()) {
+    const firstBad = document.querySelector('.invalid, .field-error.visible, .contact-warning.visible');
+    if (firstBad) firstBad.scrollIntoView({ behavior:'smooth', block:'center' });
+    return;
+  }
+  if (GAS_URL === "YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE") {
+    alert("⚠️ กรุณาตั้งค่า GAS_URL ในไฟล์ index.html ก่อนใช้งาน");
+    return;
+  }
+
+  const btn = document.getElementById('submitBtn');
+  const loadingOverlay = document.getElementById('loadingOverlay');
+  const loadingText = document.querySelector('.loading-text');
+
+  // เปลี่ยนเป็น State: Loading
+  btn.innerHTML = "กำลังเชื่อมโยงสายใยแห่งรัก... ⏳";
+  btn.disabled = true;
+  loadingText.innerHTML = "กำลังเชื่อมโยงสายใยแห่งรัก... ⏳<br><span style='font-size:13px;font-weight:400;opacity:.85'>กรุณารอสักครู่ 🙏</span>";
+  loadingOverlay.classList.add('active');
+
+  const payload = {
+    firstName: document.getElementById('firstName').value.trim(),
+    lastName:  document.getElementById('lastName').value.trim(),
+    nickname:  document.getElementById('nickname').value.trim(),
+    gender:    document.querySelector('input[name="gender"]:checked')?.value || '',
+    birthDate: document.getElementById('birthDate').value,
+    phone:           document.getElementById('phone').value.trim(),
+    lineId:          document.getElementById('lineId').value.trim(),
+    email:           document.getElementById('email').value.trim(),
+    contactChannel:  document.getElementById('contactChannel').value.trim(),
+    shippingAddress: document.getElementById('shippingAddress').value.trim(),
+    shippingPhone:   document.getElementById('shippingPhone').value.trim(),
+    believeDate:     document.getElementById('believeDate').value.trim(),
+    baptismDate:     document.getElementById('baptismDate').value.trim(),
+    oldChurch:       document.getElementById('oldChurch').value.trim() || 'ไม่ได้เป็นสมาชิกคริสตจักรใด',
+    sourceChannel:   document.getElementById('sourceChannel').value,
+    interest:        getInterests(),
+    imageBase64:     avatarBase64,
+  };
+
+  try {
+    const resp   = await fetch(GAS_URL, {
+      method:'POST', headers:{'Content-Type':'text/plain'},
+      body: JSON.stringify(payload), redirect:'follow',
+    });
+    const result = await resp.json();
+
+    if (result.status === 'success') {
+      // เปลี่ยนเป็น State: Success Transition
+      loadingText.innerHTML = "✨ เชื่อมโยงสายสัมพันธ์... สำเร็จ!! ✨";
+      btn.innerHTML = "เชื่อมโยงสายสัมพันธ์... สำเร็จ!!";
+      
+      // หน่วงเวลา 1.2 วินาที เพื่อให้ User อ่านข้อความสำเร็จ ก่อนโชว์หน้า Welcome Card
+      setTimeout(() => {
+        loadingOverlay.classList.remove('active');
+        document.getElementById('mainForm').style.display = 'none';
+        document.getElementById('successScreen').classList.add('active');
+      }, 1200);
+      
+    } else {
+      throw new Error(result.message || 'Unknown error');
+    }
+  } catch (err) {
+    loadingOverlay.classList.remove('active');
+    btn.innerHTML = "💌 ส่งความรักและลงทะเบียน";
+    btn.disabled = false;
+    alert('❌ เกิดข้อผิดพลาด: ' + err.message + '\nกรุณาลองใหม่อีกครั้ง หรือติดต่อทีมงาน');
+  }
+}
+
+// ── LIVE CLEAR ERRORS ─────────────────────────────────────────
+['firstName','lastName','nickname','birthDate','believeDate','oldChurch','sourceChannel'].forEach(id => {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.addEventListener('input', () => clearErr(id, 'err-' + id));
+  el.addEventListener('change', () => clearErr(id, 'err-' + id));
+});
+document.querySelectorAll('input[name="gender"]').forEach(r => {
+  r.addEventListener('change', () => document.getElementById('err-gender').classList.remove('visible'));
+});
+document.querySelectorAll('#interestGrid input').forEach(cb => {
+  cb.addEventListener('change', () => {
+    if (getInterests()) document.getElementById('err-interest').classList.remove('visible');
+  });
+});
+['phone','lineId','email'].forEach(id => {
+  document.getElementById(id).addEventListener('input', () => {
+    const p = document.getElementById('phone').value.trim();
+    const l = document.getElementById('lineId').value.trim();
+    const e = document.getElementById('email').value.trim();
+    if (p || l || e) document.getElementById('contactWarning').classList.remove('visible');
+  });
+});
+</script>
 </body>
 </html>
