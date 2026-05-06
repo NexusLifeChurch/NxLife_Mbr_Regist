@@ -132,6 +132,7 @@ body{
 .section-card:nth-child(4){animation-delay:.08s;}
 .section-card:nth-child(5){animation-delay:.12s;}
 .section-card:nth-child(6){animation-delay:.16s;}
+.section-card:nth-child(7){animation-delay:.20s;}
 
 .section-header{
   padding:15px 22px 13px;
@@ -274,7 +275,7 @@ select{
 .avatar-hint{font-size:12px;color:var(--text-muted);text-align:center;line-height:1.7;}
 
 /* ── SUBMIT AREA ── */
-.submit-area{margin:20px 14px 0;animation:fadeUp .6s ease .22s both;}
+.submit-area{margin:20px 14px 0;animation:fadeUp .6s ease .26s both;}
 .pre-submit-text{
   background:linear-gradient(135deg,#FDF8F2,var(--gold-pale));
   border:1px solid var(--border);border-radius:var(--radius);
@@ -542,21 +543,36 @@ input.invalid,textarea.invalid,select.invalid{
         <input type="text" id="contactChannel" placeholder="เช่น Facebook: สมชาย ใจดี / IG: @somchai"/>
       </div>
 
+    </div>
+  </div>
+
+  <!-- ══ SECTION 3: ที่อยู่จัดส่งเอกสารและของรางวัล ══ -->
+  <div class="section-card">
+    <div class="section-header">
+      <div class="section-icon">📦</div>
+      <div>
+        <div class="section-title">ที่อยู่จัดส่งเอกสารและของรางวัล</div>
+      </div>
+    </div>
+    <div class="section-body">
+      
       <div class="field-group">
-        <label for="shippingAddress">ที่อยู่จัดส่งเอกสาร/ของรางวัล <span class="opt">(ไม่บังคับ)</span></label>
+        <label for="shippingAddress">ที่อยู่จัดส่ง <span class="req">*</span></label>
         <div class="field-desc">กรุณาระบุให้ชัดเจน เช่น บ้านเลขที่ ซอย/ถนน แขวง/ตำบล เขต/อำเภอ จังหวัด รหัสไปรษณีย์</div>
         <textarea id="shippingAddress" placeholder="123/4 ซ.สุขุมวิท 10 ถ.สุขุมวิท แขวงคลองเตย เขตคลองเตย กรุงเทพฯ 10110" rows="3"></textarea>
+        <div class="field-error" id="err-shippingAddress">กรุณากรอกที่อยู่จัดส่งเอกสารและของรางวัล</div>
       </div>
 
       <div class="field-group">
-        <label for="shippingPhone">เบอร์โทรสำหรับขนส่ง <span class="opt">(ถ้าต่างจากเบอร์หลัก)</span></label>
+        <label for="shippingPhone">เบอร์โทรสำหรับขนส่ง <span class="req">*</span></label>
         <input type="tel" id="shippingPhone" placeholder="0XX-XXX-XXXX"/>
+        <div class="field-error" id="err-shippingPhone">กรุณากรอกเบอร์โทรศัพท์สำหรับขนส่ง</div>
       </div>
 
     </div>
   </div>
 
-  <!-- ══ SECTION 3: เรื่องราวความเชื่อ ══ -->
+  <!-- ══ SECTION 4: เรื่องราวความเชื่อ ══ -->
   <div class="section-card">
     <div class="section-header">
       <div class="section-icon">✝️</div>
@@ -632,7 +648,7 @@ input.invalid,textarea.invalid,select.invalid{
     </div>
   </div>
 
-  <!-- ══ SECTION 4: รูปโปรไฟล์ ══ -->
+  <!-- ══ SECTION 5: รูปโปรไฟล์ ══ -->
   <div class="section-card">
     <div class="section-header">
       <div class="section-icon">📸</div>
@@ -735,10 +751,11 @@ function clearErr(id, errId) {
 function validateForm() {
   let ok = true;
 
-  // Required text fields (ถอด oldChurch ออก)
+  // Required text fields (ถอด oldChurch ออก, เพิ่ม shippingAddress และ shippingPhone)
   [['firstName','err-firstName'],['lastName','err-lastName'],['nickname','err-nickname'],
    ['birthDate','err-birthDate'],['believeDate','err-believeDate'],
-   ['sourceChannel','err-sourceChannel']
+   ['sourceChannel','err-sourceChannel'],
+   ['shippingAddress', 'err-shippingAddress'], ['shippingPhone', 'err-shippingPhone']
   ].forEach(([id, errId]) => {
     const el = document.getElementById(id);
     const er = document.getElementById(errId);
@@ -858,7 +875,7 @@ async function submitForm() {
 }
 
 // ── LIVE CLEAR ERRORS ─────────────────────────────────────────
-['firstName','lastName','nickname','birthDate','believeDate'].forEach(id => {
+['firstName','lastName','nickname','birthDate','believeDate', 'shippingAddress', 'shippingPhone'].forEach(id => {
   const el = document.getElementById(id);
   if (!el) return;
   el.addEventListener('input', () => clearErr(id, 'err-' + id));
