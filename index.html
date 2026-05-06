@@ -1,4 +1,4 @@
-<!-- NxLife Registration Form v1.8 -->
+<!-- NxLife Registration Form v1.9 -->
 <!DOCTYPE html>
 <html lang="th">
 <head>
@@ -7,7 +7,6 @@
 <title>NxLife — ลงทะเบียนสมาชิกใหม่</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<!-- นำเข้า Font: Prompt และ Sarabun -->
 <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;500;600;700&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
 <style>
 :root {
@@ -148,7 +147,7 @@ body{
   box-shadow:0 2px 8px rgba(184,134,11,.25);
 }
 .section-title{
-  font-family:'Prompt', sans-serif; /* เปลี่ยนหมวดหมู่เป็น Prompt */
+  font-family:'Prompt', sans-serif; 
   font-size:17px;font-weight:600;
   color:var(--primary);
   letter-spacing:.01em;
@@ -822,7 +821,6 @@ async function submitForm() {
     shippingPhone:   document.getElementById('shippingPhone').value.trim(),
     believeDate:     document.getElementById('believeDate').value.trim(),
     baptismDate:     document.getElementById('baptismDate').value.trim(),
-    // คริสตจักรเดิม ถ้าว่างให้ default
     oldChurch:       document.getElementById('oldChurch').value.trim() || 'ไม่ได้เป็นสมาชิกคริสตจักรใด',
     sourceChannel:   finalSourceChannel,
     interest:        getInterests(),
@@ -841,7 +839,6 @@ async function submitForm() {
       loadingText.innerHTML = "✨ เชื่อมโยงสายสัมพันธ์... สำเร็จ!! ✨";
       btn.innerHTML = "เชื่อมโยงสายสัมพันธ์... สำเร็จ!!";
       
-      // หน่วงเวลา 1.2 วินาที เพื่อให้ User อ่านข้อความสำเร็จ ก่อนโชว์หน้า Welcome Card
       setTimeout(() => {
         loadingOverlay.classList.remove('active');
         document.getElementById('mainForm').style.display = 'none';
@@ -883,7 +880,6 @@ document.querySelectorAll('#interestGrid input').forEach(cb => {
   });
 });
 
-// Event Listener สำหรับ Dropdown ช่องทาง
 document.getElementById('sourceChannel').addEventListener('change', function() {
     clearErr('sourceChannel', 'err-sourceChannel');
     const otherGroup = document.getElementById('sourceOtherGroup');
@@ -891,12 +887,11 @@ document.getElementById('sourceChannel').addEventListener('change', function() {
         otherGroup.style.display = "block";
     } else {
         otherGroup.style.display = "none";
-        document.getElementById('sourceOther').value = ""; // clear ค่าถ้าเปลี่ยนไปเลือกอันอื่น
+        document.getElementById('sourceOther').value = ""; 
         document.getElementById('err-sourceOther').classList.remove('visible');
         document.getElementById('sourceOther').classList.remove('invalid');
     }
 });
-// เคลียร์ error กล่อง "อื่นๆ" ตอนพิมพ์
 document.getElementById('sourceOther').addEventListener('input', () => clearErr('sourceOther', 'err-sourceOther'));
 
 </script>
