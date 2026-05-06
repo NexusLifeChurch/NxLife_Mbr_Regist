@@ -1,4 +1,4 @@
-<!-- NxLife Registration Form v1.13 (Coffee Tone Theme) -->
+<!-- NxLife Registration Form v1.14 (Coffee Tone Theme - Icon Fix) -->
 <!DOCTYPE html>
 <html lang="th">
 <head>
@@ -142,11 +142,12 @@ body{
 }
 .section-icon{
   width:36px;height:36px;
-  background:linear-gradient(135deg,var(--gold),var(--gold-light));
+  background:#FFFFFF; /* เปลี่ยนเป็นสีขาวให้ไอคอนสว่างขึ้น */
+  border: 1.5px solid var(--gold-pale); /* เพิ่มขอบสีครีมอ่อน */
   border-radius:9px;
   display:flex;align-items:center;justify-content:center;
   font-size:17px;flex-shrink:0;
-  box-shadow:0 2px 8px rgba(139,90,43,.25);
+  box-shadow:0 3px 10px rgba(74, 54, 35, 0.1); /* ปรับเงาให้นุ่มนวล */
 }
 .section-title{
   font-family:'Prompt', sans-serif; 
