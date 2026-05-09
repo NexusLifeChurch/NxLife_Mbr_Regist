@@ -1,4 +1,4 @@
-<!-- NxLife Registration Form v1.16 (Fix Validation & Text) -->
+<!-- NxLife Registration Form v1.18 (Coffee Tone Theme - Strict Validation & Animations) -->
 <!DOCTYPE html>
 <html lang="th">
 <head>
@@ -350,11 +350,21 @@ select{
   font-size:20px;font-weight:600;color:var(--primary);
   line-height:1.5;margin-bottom:14px;
 }
+
+/* ── DIVIDER ANIMATION ── */
+@keyframes moveDivider {
+  0% { transform: translateX(-30px); opacity: 0.4; }
+  50% { opacity: 1; }
+  100% { transform: translateX(30px); opacity: 0.4; }
+}
 .success-divider{
   width:56px;height:2.5px;margin:0 auto 18px;
   background:linear-gradient(90deg,transparent,var(--gold),transparent);
   border-radius:2px;
+  position: relative;
+  animation: moveDivider 2s ease-in-out infinite alternate;
 }
+
 .success-body{
   font-size:14.5px;color:var(--text-muted);
   line-height:1.9;margin-bottom:20px;
@@ -373,12 +383,29 @@ input.invalid,textarea.invalid,select.invalid{
   border-color:#E74C3C !important;
   box-shadow:0 0 0 3px rgba(231,76,60,.1) !important;
 }
-.contact-warning{
-  background:#FFF5F5;border:1px solid #FDDCDC;
-  border-radius:var(--radius-sm);padding:10px 14px;
-  font-size:13px;color:#C0392B;margin-top:8px;display:none;
+
+/* ── STRICT CONTACT WARNING ANIMATION ── */
+@keyframes shakeWarning {
+  0%, 100% {transform: translateX(0);}
+  20%, 60% {transform: translateX(-5px);}
+  40%, 80% {transform: translateX(5px);}
 }
-.contact-warning.visible{display:block;}
+.contact-warning{
+  background:#FFF5F5;
+  border:1.5px solid #E74C3C;
+  border-radius:var(--radius-sm);
+  padding:12px 14px;
+  font-size:13.5px;
+  color:#C0392B;
+  font-weight: 600;
+  margin-top:8px;
+  display:none;
+  text-align: center;
+}
+.contact-warning.visible{
+  display:block;
+  animation: shakeWarning 0.45s ease-in-out;
+}
 
 /* ── ANIMATIONS ── */
 @keyframes fadeUp{from{opacity:0;transform:translateY(18px);}to{opacity:1;transform:translateY(0);}}
@@ -519,7 +546,7 @@ input.invalid,textarea.invalid,select.invalid{
     <div class="section-body">
 
       <div class="contact-warning" id="contactWarning">
-        ❗ กรุณากรอกช่องทางติดต่ออย่างน้อย 1 ช่องทาง (เบอร์โทร, Line ID หรือ Email)
+        🚨 ต้องกรอกอย่างน้อย 1 ช่องทาง (เบอร์โทร, Line ID หรือ Email)
       </div>
 
       <div class="field-row">
@@ -622,8 +649,8 @@ input.invalid,textarea.invalid,select.invalid{
 
       <!-- ช่องระบุชื่อคริสตจักร (จะซ่อนไว้ถ้ายอมรับว่า 'ไม่เคยไป') -->
       <div class="field-group" id="churchNameGroup" style="display:none;">
-        <label for="oldChurch">*กรุณาระบุชื่อคริสตจักร</label>
-        <input type="text" id="oldChurch" placeholder="ระบุชื่อคริสตจักร..."/>
+        <label for="oldChurch">กรุณาระบุชื่อคริสตจักร</label>
+        <input type="text" id="oldChurch" placeholder="พิมพ์ชื่อคริสตจักร..."/>
         <div class="field-error" id="err-oldChurch">กรุณาระบุชื่อคริสตจักร</div>
       </div>
 
@@ -844,7 +871,7 @@ function validateForm() {
   const email  = document.getElementById('email').value.trim();
   const cw = document.getElementById('contactWarning');
   
-  if (!phone && !lineId && !email) { 
+  if (phone === "" && lineId === "" && email === "") { 
       cw.classList.add('visible'); 
       document.getElementById('phone').classList.add('invalid');
       document.getElementById('lineId').classList.add('invalid');
@@ -864,7 +891,17 @@ function validateForm() {
 async function submitForm() {
   if (!validateForm()) {
     const firstBad = document.querySelector('.invalid, .field-error.visible, .contact-warning.visible');
-    if (firstBad) firstBad.scrollIntoView({ behavior:'smooth', block:'center' });
+    if (firstBad) {
+      // เลื่อนหน้าจอไปหาจุดที่ Error
+      firstBad.scrollIntoView({ behavior:'smooth', block:'center' });
+      // ทำให้กล่อง Contact Warning สั่นเตือนซ้ำ
+      if(firstBad.id === 'contactWarning' || firstBad.closest('#contactWarning')) {
+        const cw = document.getElementById('contactWarning');
+        cw.classList.remove('visible');
+        void cw.offsetWidth; // trigger reflow
+        cw.classList.add('visible');
+      }
+    }
     return;
   }
 
@@ -957,12 +994,14 @@ document.querySelectorAll('#interestGrid input').forEach(cb => {
     if (getInterests()) document.getElementById('err-interest').classList.remove('visible');
   });
 });
+
+// เคลียร์ Error กล่องติดต่อทันทีที่เริ่มพิมพ์ 1 ใน 3 ช่อง
 ['phone','lineId','email'].forEach(id => {
   document.getElementById(id).addEventListener('input', () => {
     const p = document.getElementById('phone').value.trim();
     const l = document.getElementById('lineId').value.trim();
     const e = document.getElementById('email').value.trim();
-    if (p || l || e) {
+    if (p !== "" || l !== "" || e !== "") {
         document.getElementById('contactWarning').classList.remove('visible');
         document.getElementById('phone').classList.remove('invalid');
         document.getElementById('lineId').classList.remove('invalid');
