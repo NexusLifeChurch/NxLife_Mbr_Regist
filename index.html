@@ -1,4 +1,4 @@
-<!-- NxLife Registration Form v1.15 (Coffee Tone Theme - Update Logic) -->
+<!-- NxLife Registration Form v1.16 (Fix Validation & Text) -->
 <!DOCTYPE html>
 <html lang="th">
 <head>
@@ -499,7 +499,7 @@ input.invalid,textarea.invalid,select.invalid{
 
       <div class="field-group">
         <label for="birthDate">วันเกิด<span class="req">*</span></label>
-        <div class="field-desc">📅 กดเลือกจากตัวช่วยวันที่ (รูปแบบ วัน เดือน ปี ค.ศ.)</div>
+        <div class="field-desc">📅 กดเลือก โดยใช้ตัวช่วยบันทึกวันที่ (เริ่มเลือกจาก ปี ค.ศ.)</div>
         <input type="date" id="birthDate"/>
         <div class="field-error" id="err-birthDate">กรุณาเลือกวันเกิด</div>
       </div>
@@ -623,7 +623,7 @@ input.invalid,textarea.invalid,select.invalid{
       <!-- ช่องระบุชื่อคริสตจักร (จะซ่อนไว้ถ้ายอมรับว่า 'ไม่เคยไป') -->
       <div class="field-group" id="churchNameGroup" style="display:none;">
         <label for="oldChurch">*กรุณาระบุชื่อคริสตจักร</label>
-        <input type="text" id="oldChurch" />
+        <input type="text" id="oldChurch" placeholder="ระบุชื่อคริสตจักร..."/>
         <div class="field-error" id="err-oldChurch">กรุณาระบุชื่อคริสตจักร</div>
       </div>
 
@@ -680,7 +680,6 @@ input.invalid,textarea.invalid,select.invalid{
       <div class="section-icon">📸</div>
       <div>
         <div class="section-title">รูปโปรไฟล์</div>
-        <!-- แก้ไขข้อความแนะนำรูปโปรไฟล์ -->
         <span class="section-note">แนบรูปโปรไฟล์ : ยิ้มหวาน ๆ สวย หล่อ เท่ห์ ตามสไตล์ของคุณ 😊</span>
       </div>
     </div>
@@ -709,7 +708,6 @@ input.invalid,textarea.invalid,select.invalid{
       ส่งยิ้มหวาน ๆ พร้อมหัวใจที่อบอุ่นให้กันสักนิด 💖<br/>
       แล้วค่อยๆ แตะที่ปุ่ม "ส่งความรักและลงทะเบียน" อย่างแผ่วเบา…
     </div>
-    <!-- แก้ไขข้อความปุ่มกด -->
     <button class="btn-submit" id="submitBtn" onclick="submitForm()">
       💌 กดส่งความรัก..และลงทะเบียน
     </button>
@@ -802,7 +800,6 @@ function validateForm() {
     ok = false; 
   } else { 
     errCStatus.classList.remove('visible'); 
-    // หากเลือกตัวเลือกอื่นที่ไม่ใช่ 'ไม่เคยไป' บังคับกรอกช่องระบุชื่อ
     if (cStatus.value !== 'ไม่เคยไปคริสตจักรเลย') {
        const cName = document.getElementById('oldChurch');
        const errCName = document.getElementById('err-oldChurch');
@@ -846,8 +843,19 @@ function validateForm() {
   const lineId = document.getElementById('lineId').value.trim();
   const email  = document.getElementById('email').value.trim();
   const cw = document.getElementById('contactWarning');
-  if (!phone && !lineId && !email) { cw.classList.add('visible'); ok = false; }
-  else                              { cw.classList.remove('visible'); }
+  
+  if (!phone && !lineId && !email) { 
+      cw.classList.add('visible'); 
+      document.getElementById('phone').classList.add('invalid');
+      document.getElementById('lineId').classList.add('invalid');
+      document.getElementById('email').classList.add('invalid');
+      ok = false; 
+  } else { 
+      cw.classList.remove('visible'); 
+      document.getElementById('phone').classList.remove('invalid');
+      document.getElementById('lineId').classList.remove('invalid');
+      document.getElementById('email').classList.remove('invalid');
+  }
 
   return ok;
 }
@@ -954,7 +962,12 @@ document.querySelectorAll('#interestGrid input').forEach(cb => {
     const p = document.getElementById('phone').value.trim();
     const l = document.getElementById('lineId').value.trim();
     const e = document.getElementById('email').value.trim();
-    if (p || l || e) document.getElementById('contactWarning').classList.remove('visible');
+    if (p || l || e) {
+        document.getElementById('contactWarning').classList.remove('visible');
+        document.getElementById('phone').classList.remove('invalid');
+        document.getElementById('lineId').classList.remove('invalid');
+        document.getElementById('email').classList.remove('invalid');
+    }
   });
 });
 
