@@ -1,4 +1,4 @@
-<!-- NxLife Registration Form v1.14 (Coffee Tone Theme - Icon Fix) -->
+<!-- NxLife Registration Form v1.15 (Coffee Tone Theme - Update Logic) -->
 <!DOCTYPE html>
 <html lang="th">
 <head>
@@ -12,7 +12,7 @@
 :root {
   /* ☕ COFFEE TONE PALETTE */
   --primary:    #4A3623; /* Espresso */
-  --gold:       #8B5A2B; /* Caramel/Mocha (แทนที่สีทองเดิม) */
+  --gold:       #8B5A2B; /* Caramel/Mocha */
   --gold-light: #A67B5B; /* Latte */
   --gold-pale:  #E8DCC4; /* Cream/Milk Foam */
   --bg:         #E6DACA; /* พื้นหลังสีเบจกาแฟ */
@@ -142,12 +142,12 @@ body{
 }
 .section-icon{
   width:36px;height:36px;
-  background:#FFFFFF; /* เปลี่ยนเป็นสีขาวให้ไอคอนสว่างขึ้น */
-  border: 1.5px solid var(--gold-pale); /* เพิ่มขอบสีครีมอ่อน */
+  background:#FFFFFF;
+  border: 1.5px solid var(--gold-pale);
   border-radius:9px;
   display:flex;align-items:center;justify-content:center;
   font-size:17px;flex-shrink:0;
-  box-shadow:0 3px 10px rgba(74, 54, 35, 0.1); /* ปรับเงาให้นุ่มนวล */
+  box-shadow:0 3px 10px rgba(74, 54, 35, 0.1);
 }
 .section-title{
   font-family:'Prompt', sans-serif; 
@@ -204,7 +204,7 @@ select{
   padding-right:38px;cursor:pointer;
 }
 
-/* ── RADIO GENDER ── */
+/* ── RADIO GENDER & GENERAL ── */
 .radio-group{display:flex;gap:10px;flex-wrap:wrap;}
 .radio-option{flex:1;min-width:90px;}
 .radio-option input[type="radio"]{display:none;}
@@ -285,7 +285,7 @@ select{
 }
 .btn-submit{
   width:100%;padding:17px 24px;
-  background:linear-gradient(135deg,#4A3623 0%,#6D4C41 60%,#4A3623 100%); /* Espresso to Mocha */
+  background:linear-gradient(135deg,#4A3623 0%,#6D4C41 60%,#4A3623 100%);
   color:#fff;border:none;border-radius:var(--radius);
   font-family:'Prompt',sans-serif;font-size:17px;font-weight:500;
   cursor:pointer;letter-spacing:.04em;
@@ -304,7 +304,7 @@ select{
 /* ── LOADING OVERLAY ── */
 .loading-overlay{
   display:none;position:fixed;inset:0;
-  background:rgba(74,54,35,.6);backdrop-filter:blur(5px); /* Mocha overlay */
+  background:rgba(74,54,35,.6);backdrop-filter:blur(5px);
   z-index:900;align-items:center;justify-content:center;
   flex-direction:column;gap:18px;
 }
@@ -596,10 +596,35 @@ input.invalid,textarea.invalid,select.invalid{
           placeholder="เช่น กุมภาพันธ์ 2021 / ยังไม่ได้รับบัพติสมา"></textarea>
       </div>
       
+      <!-- แก้ไขเรื่อง คริสตจักร -->
       <div class="field-group">
-        <label for="oldChurch">คริสตจักรเดิม <span class="opt">(ถ้าไม่มี ไม่ต้องระบุ)</span></label>
-        <input type="text" id="oldChurch" placeholder="ระบุชื่อคริสตจักรเดิม..."/>
-        <div class="field-desc">หากปล่อยว่าง ระบบจะระบุว่า "ไม่ได้เป็นสมาชิกคริสตจักรใด" ให้โดยอัตโนมัติ</div>
+        <label>คริสตจักรที่คุณไปร่วมนมัสการเป็นประจำ<span class="req">*</span></label>
+        <div class="radio-group" style="flex-direction: column; gap: 8px;">
+          <div class="radio-option" style="width: 100%;">
+            <input type="radio" name="churchStatus" id="cNone" value="ไม่เคยไปคริสตจักรเลย"/>
+            <label for="cNone" style="justify-content: flex-start; padding-left: 16px;">ไม่เคยไปคริสตจักรเลย</label>
+          </div>
+          <div class="radio-option" style="width: 100%;">
+            <input type="radio" name="churchStatus" id="cRare" value="นานๆ จะไปคริสตจักร"/>
+            <label for="cRare" style="justify-content: flex-start; padding-left: 16px;">นานๆ จะไปคริสตจักร</label>
+          </div>
+          <div class="radio-option" style="width: 100%;">
+            <input type="radio" name="churchStatus" id="cPast" value="เคยไป แต่ตอนนี้ไม่ได้ไปแล้ว"/>
+            <label for="cPast" style="justify-content: flex-start; padding-left: 16px;">เคยไป แต่ตอนนี้ไม่ได้ไปแล้ว</label>
+          </div>
+          <div class="radio-option" style="width: 100%;">
+            <input type="radio" name="churchStatus" id="cRegular" value="มีคริสตจักรที่ไปร่วมเป็นประจำ"/>
+            <label for="cRegular" style="justify-content: flex-start; padding-left: 16px;">มีคริสตจักรที่ไปร่วมเป็นประจำ</label>
+          </div>
+        </div>
+        <div class="field-error" id="err-churchStatus">กรุณาเลือกสถานะการไปคริสตจักร</div>
+      </div>
+
+      <!-- ช่องระบุชื่อคริสตจักร (จะซ่อนไว้ถ้ายอมรับว่า 'ไม่เคยไป') -->
+      <div class="field-group" id="churchNameGroup" style="display:none;">
+        <label for="oldChurch">*กรุณาระบุชื่อคริสตจักร</label>
+        <input type="text" id="oldChurch" />
+        <div class="field-error" id="err-oldChurch">กรุณาระบุชื่อคริสตจักร</div>
       </div>
 
       <div class="field-group">
@@ -655,7 +680,8 @@ input.invalid,textarea.invalid,select.invalid{
       <div class="section-icon">📸</div>
       <div>
         <div class="section-title">รูปโปรไฟล์</div>
-        <span class="section-note">ไม่บังคับ — ถ้าไม่มีจะใช้โลโก้ NxLife แทน</span>
+        <!-- แก้ไขข้อความแนะนำรูปโปรไฟล์ -->
+        <span class="section-note">แนบรูปโปรไฟล์ : ยิ้มหวาน ๆ สวย หล่อ เท่ห์ ตามสไตล์ของคุณ 😊</span>
       </div>
     </div>
     <div class="section-body">
@@ -683,8 +709,9 @@ input.invalid,textarea.invalid,select.invalid{
       ส่งยิ้มหวาน ๆ พร้อมหัวใจที่อบอุ่นให้กันสักนิด 💖<br/>
       แล้วค่อยๆ แตะที่ปุ่ม "ส่งความรักและลงทะเบียน" อย่างแผ่วเบา…
     </div>
+    <!-- แก้ไขข้อความปุ่มกด -->
     <button class="btn-submit" id="submitBtn" onclick="submitForm()">
-      💌 ส่งความรักและลงทะเบียน
+      💌 กดส่งความรัก..และลงทะเบียน
     </button>
   </div>
 
@@ -752,7 +779,7 @@ function clearErr(id, errId) {
 function validateForm() {
   let ok = true;
 
-  // Required text fields (ถอด oldChurch ออก, เพิ่ม shippingAddress และ shippingPhone)
+  // 1. ตรวจสอบช่องบังคับกรอก (Text Fields)
   [['firstName','err-firstName'],['lastName','err-lastName'],['nickname','err-nickname'],
    ['birthDate','err-birthDate'],['believeDate','err-believeDate'],
    ['sourceChannel','err-sourceChannel'],
@@ -767,7 +794,30 @@ function validateForm() {
     }
   });
   
-  // เช็ค Source Channel อื่นๆ
+  // 2. เช็คการเลือกสถานะคริสตจักร และบังคับกรอกชื่อคริสตจักรหากมี
+  const cStatus = document.querySelector('input[name="churchStatus"]:checked');
+  const errCStatus = document.getElementById('err-churchStatus');
+  if (!cStatus) { 
+    errCStatus.classList.add('visible'); 
+    ok = false; 
+  } else { 
+    errCStatus.classList.remove('visible'); 
+    // หากเลือกตัวเลือกอื่นที่ไม่ใช่ 'ไม่เคยไป' บังคับกรอกช่องระบุชื่อ
+    if (cStatus.value !== 'ไม่เคยไปคริสตจักรเลย') {
+       const cName = document.getElementById('oldChurch');
+       const errCName = document.getElementById('err-oldChurch');
+       if (!cName.value.trim()) {
+          cName.classList.add('invalid');
+          errCName.classList.add('visible');
+          ok = false;
+       } else {
+          cName.classList.remove('invalid');
+          errCName.classList.remove('visible');
+       }
+    }
+  }
+
+  // 3. เช็ค Source Channel อื่นๆ
   const sChan = document.getElementById('sourceChannel').value;
   if (sChan === "อื่นๆ") {
       const sOther = document.getElementById('sourceOther');
@@ -779,19 +829,19 @@ function validateForm() {
       }
   }
 
-  // Gender
+  // 4. Gender
   const gender = document.querySelector('input[name="gender"]:checked');
   const errG = document.getElementById('err-gender');
   if (!gender) { errG.classList.add('visible'); ok = false; }
   else          { errG.classList.remove('visible'); }
 
-  // Interest (at least 1)
+  // 5. Interest (at least 1)
   const interests = getInterests();
   const errI = document.getElementById('err-interest');
   if (!interests) { errI.classList.add('visible'); ok = false; }
   else            { errI.classList.remove('visible'); }
 
-  // Contact (at least 1 of phone/lineId/email)
+  // 6. Contact (ต้องกรอกอย่างน้อย 1 ช่องใน 3 ช่อง: เบอร์, Line ID, Email)
   const phone = document.getElementById('phone').value.trim();
   const lineId = document.getElementById('lineId').value.trim();
   const email  = document.getElementById('email').value.trim();
@@ -826,6 +876,15 @@ async function submitForm() {
       finalSourceChannel = "อื่นๆ: " + document.getElementById('sourceOther').value.trim();
   }
 
+  // จัดการข้อความเรื่องราวคริสตจักรเดิม
+  let churchStatus = document.querySelector('input[name="churchStatus"]:checked')?.value || '';
+  let churchName = document.getElementById('oldChurch').value.trim();
+  let finalChurch = churchStatus;
+  // หากมีการกรอกชื่อคริสตจักร ให้นำมาต่อท้ายในวงเล็บ
+  if (churchStatus !== "ไม่เคยไปคริสตจักรเลย" && churchName) {
+      finalChurch += " (" + churchName + ")";
+  }
+
   const payload = {
     firstName: document.getElementById('firstName').value.trim(),
     lastName:  document.getElementById('lastName').value.trim(),
@@ -840,7 +899,7 @@ async function submitForm() {
     shippingPhone:   document.getElementById('shippingPhone').value.trim(),
     believeDate:     document.getElementById('believeDate').value.trim(),
     baptismDate:     document.getElementById('baptismDate').value.trim(),
-    oldChurch:       document.getElementById('oldChurch').value.trim() || 'ไม่ได้เป็นสมาชิกคริสตจักรใด',
+    oldChurch:       finalChurch, // ค่าที่นำมารวมกันเรียบร้อยแล้ว
     sourceChannel:   finalSourceChannel,
     interest:        getInterests(),
     imageBase64:     avatarBase64,
@@ -869,7 +928,7 @@ async function submitForm() {
     }
   } catch (err) {
     loadingOverlay.classList.remove('active');
-    btn.innerHTML = "💌 ส่งความรักและลงทะเบียน";
+    btn.innerHTML = "💌 กดส่งความรัก..และลงทะเบียน"; // รีเซ็ตข้อความปุ่มใหม่
     btn.disabled = false;
     alert('❌ เกิดข้อผิดพลาด: ' + err.message + '\nกรุณาลองใหม่อีกครั้ง หรือติดต่อทีมงาน');
   }
@@ -912,6 +971,22 @@ document.getElementById('sourceChannel').addEventListener('change', function() {
     }
 });
 document.getElementById('sourceOther').addEventListener('input', () => clearErr('sourceOther', 'err-sourceOther'));
+
+// Event สำหรับเปิด/ปิดช่องกรอกชื่อคริสตจักร และล้าง Error เมื่อมีการเลือก
+document.querySelectorAll('input[name="churchStatus"]').forEach(r => {
+  r.addEventListener('change', (e) => {
+    document.getElementById('err-churchStatus').classList.remove('visible');
+    const churchNameGroup = document.getElementById('churchNameGroup');
+    if(e.target.value === 'ไม่เคยไปคริสตจักรเลย') {
+       churchNameGroup.style.display = 'none';
+       document.getElementById('oldChurch').value = '';
+       clearErr('oldChurch', 'err-oldChurch');
+    } else {
+       churchNameGroup.style.display = 'block';
+    }
+  });
+});
+document.getElementById('oldChurch').addEventListener('input', () => clearErr('oldChurch', 'err-oldChurch'));
 
 </script>
 </body>
