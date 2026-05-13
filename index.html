@@ -350,7 +350,6 @@ select{
   font-size:20px;font-weight:600;color:var(--primary);
   line-height:1.5;margin-bottom:14px;
 }
-
 /* ── DIVIDER ANIMATION ── */
 @keyframes moveDivider {
   0% { transform: translateX(-30px); opacity: 0.4; }
@@ -623,7 +622,6 @@ input.invalid,textarea.invalid,select.invalid{
           placeholder="เช่น กุมภาพันธ์ 2021 / ยังไม่ได้รับบัพติสมา"></textarea>
       </div>
       
-      <!-- แก้ไขเรื่อง คริสตจักร -->
       <div class="field-group">
         <label>คริสตจักรที่คุณไปร่วมนมัสการเป็นประจำ<span class="req">*</span></label>
         <div class="radio-group" style="flex-direction: column; gap: 8px;">
@@ -647,7 +645,6 @@ input.invalid,textarea.invalid,select.invalid{
         <div class="field-error" id="err-churchStatus">กรุณาเลือกสถานะการไปคริสตจักร</div>
       </div>
 
-      <!-- ช่องระบุชื่อคริสตจักร (จะซ่อนไว้ถ้ายอมรับว่า 'ไม่เคยไป') -->
       <div class="field-group" id="churchNameGroup" style="display:none;">
         <label for="oldChurch">กรุณาระบุชื่อคริสตจักร</label>
         <input type="text" id="oldChurch" placeholder="พิมพ์ชื่อคริสตจักร..."/>
@@ -655,7 +652,7 @@ input.invalid,textarea.invalid,select.invalid{
       </div>
 
       <div class="field-group">
-        <label for="sourceChannel">รู้จัก NxLife ผ่านช่องทางใด<span class="req">*</span></label>
+        <label for="sourceChannel">รู้จัก NxLife ผ่านช่องทางใด <span class="opt">(เลือกได้ 1 ช่องทาง)</span><span class="req">*</span></label>
         <div class="source-desc-box">
           <p>💻 <strong>สื่อออนไลน์</strong> – เช่น Facebook, YouTube, TikTok ฯลฯ</p>
           <p>👩‍👧 <strong>สายสัมพันธ์ Nexus</strong> – การแนะนำจาก เพื่อน, พี่น้อง, ญาติมิตร ที่อยู่ในคณะ Nexus</p>
@@ -675,14 +672,13 @@ input.invalid,textarea.invalid,select.invalid{
         <div class="field-error" id="err-sourceChannel">กรุณาเลือกช่องทาง</div>
       </div>
       
-      <!-- ซ่อนไว้ก่อน จะโชว์เมื่อเลือก "อื่นๆ" -->
       <div class="field-group" id="sourceOtherGroup" style="display:none; margin-top:-8px;">
         <input type="text" id="sourceOther" placeholder="โปรดระบุรายละเอียดช่องทาง..."/>
         <div class="field-error" id="err-sourceOther">กรุณาระบุรายละเอียดเพิ่มเติม</div>
       </div>
 
       <div class="field-group">
-        <label>สิ่งที่สนใจ<span class="req">*</span></label>
+        <label>สิ่งที่สนใจ <span class="opt">(เลือกได้มากกว่า 1 ข้อ)</span><span class="req">*</span></label>
         <div class="checkbox-grid" id="interestGrid">
           <div class="checkbox-chip"><input type="checkbox" id="i1" value="อยากรู้จักพระเจ้า"/><label for="i1">อยากรู้จักพระเจ้า</label></div>
           <div class="checkbox-chip"><input type="checkbox" id="i2" value="ต้องการคำอธิษฐานเผื่อ"/><label for="i2">ต้องการคำอธิษฐานเผื่อ</label></div>
@@ -704,7 +700,7 @@ input.invalid,textarea.invalid,select.invalid{
   <!-- ══ SECTION 5: รูปโปรไฟล์ ══ -->
   <div class="section-card">
     <div class="section-header">
-      <div class="section-icon">📸</div>
+      <div class="section-icon">🧑</div>
       <div>
         <div class="section-title">รูปโปรไฟล์</div>
         <span class="section-note">แนบรูปโปรไฟล์ : ยิ้มหวาน ๆ สวย หล่อ เท่ห์ ตามสไตล์ของคุณ 😊</span>
@@ -819,7 +815,7 @@ function validateForm() {
     }
   });
   
-  // 2. เช็คการเลือกสถานะคริสตจักร และบังคับกรอกชื่อคริสตจักรหากมี
+  // 2. เช็คการเลือกสถานะคริสตจักร
   const cStatus = document.querySelector('input[name="churchStatus"]:checked');
   const errCStatus = document.getElementById('err-churchStatus');
   if (!cStatus) { 
@@ -859,29 +855,32 @@ function validateForm() {
   if (!gender) { errG.classList.add('visible'); ok = false; }
   else          { errG.classList.remove('visible'); }
 
-  // 5. Interest (at least 1)
+  // 5. Interest
   const interests = getInterests();
   const errI = document.getElementById('err-interest');
   if (!interests) { errI.classList.add('visible'); ok = false; }
   else            { errI.classList.remove('visible'); }
 
-  // 6. Contact (ต้องกรอกอย่างน้อย 1 ช่องใน 3 ช่อง: เบอร์, Line ID, Email)
-  const phone = document.getElementById('phone').value.trim();
-  const lineId = document.getElementById('lineId').value.trim();
-  const email  = document.getElementById('email').value.trim();
+  // 6. Contact (เข้มงวดที่สุด)
+  const phoneInput = document.getElementById('phone');
+  const lineInput = document.getElementById('lineId');
+  const emailInput = document.getElementById('email');
+  const phoneVal = phoneInput.value.trim();
+  const lineVal = lineInput.value.trim();
+  const emailVal = emailInput.value.trim();
   const cw = document.getElementById('contactWarning');
   
-  if (phone === "" && lineId === "" && email === "") { 
+  if (phoneVal === "" && lineVal === "" && emailVal === "") { 
       cw.classList.add('visible'); 
-      document.getElementById('phone').classList.add('invalid');
-      document.getElementById('lineId').classList.add('invalid');
-      document.getElementById('email').classList.add('invalid');
+      phoneInput.classList.add('invalid');
+      lineInput.classList.add('invalid');
+      emailInput.classList.add('invalid');
       ok = false; 
   } else { 
       cw.classList.remove('visible'); 
-      document.getElementById('phone').classList.remove('invalid');
-      document.getElementById('lineId').classList.remove('invalid');
-      document.getElementById('email').classList.remove('invalid');
+      phoneInput.classList.remove('invalid');
+      lineInput.classList.remove('invalid');
+      emailInput.classList.remove('invalid');
   }
 
   return ok;
@@ -892,9 +891,7 @@ async function submitForm() {
   if (!validateForm()) {
     const firstBad = document.querySelector('.invalid, .field-error.visible, .contact-warning.visible');
     if (firstBad) {
-      // เลื่อนหน้าจอไปหาจุดที่ Error
       firstBad.scrollIntoView({ behavior:'smooth', block:'center' });
-      // ทำให้กล่อง Contact Warning สั่นเตือนซ้ำ
       if(firstBad.id === 'contactWarning' || firstBad.closest('#contactWarning')) {
         const cw = document.getElementById('contactWarning');
         cw.classList.remove('visible');
@@ -902,30 +899,26 @@ async function submitForm() {
         cw.classList.add('visible');
       }
     }
-    return;
+    return; // <-- การส่งฟอร์มถูกบล็อกตรงนี้ 100% ถ้า Validate ไม่ผ่าน
   }
 
   const btn = document.getElementById('submitBtn');
   const loadingOverlay = document.getElementById('loadingOverlay');
   const loadingText = document.querySelector('.loading-text');
 
-  // เปลี่ยนเป็น State: Loading
   btn.innerHTML = "กำลังเชื่อมโยงสายใยแห่งรัก... ⏳";
   btn.disabled = true;
   loadingText.innerHTML = "กำลังเชื่อมโยงสายใยแห่งรัก... ⏳<br><span style='font-family:\"Sarabun\",sans-serif;font-size:13px;font-weight:400;opacity:.85'>กรุณารอสักครู่ 🙏</span>";
   loadingOverlay.classList.add('active');
   
-  // จัดการ Source Channel กรณีเลือกอื่นๆ
   let finalSourceChannel = document.getElementById('sourceChannel').value;
   if (finalSourceChannel === "อื่นๆ") {
       finalSourceChannel = "อื่นๆ: " + document.getElementById('sourceOther').value.trim();
   }
 
-  // จัดการข้อความเรื่องราวคริสตจักรเดิม
   let churchStatus = document.querySelector('input[name="churchStatus"]:checked')?.value || '';
   let churchName = document.getElementById('oldChurch').value.trim();
   let finalChurch = churchStatus;
-  // หากมีการกรอกชื่อคริสตจักร ให้นำมาต่อท้ายในวงเล็บ
   if (churchStatus !== "ไม่เคยไปคริสตจักรเลย" && churchName) {
       finalChurch += " (" + churchName + ")";
   }
@@ -944,7 +937,7 @@ async function submitForm() {
     shippingPhone:   document.getElementById('shippingPhone').value.trim(),
     believeDate:     document.getElementById('believeDate').value.trim(),
     baptismDate:     document.getElementById('baptismDate').value.trim(),
-    oldChurch:       finalChurch, // ค่าที่นำมารวมกันเรียบร้อยแล้ว
+    oldChurch:       finalChurch, 
     sourceChannel:   finalSourceChannel,
     interest:        getInterests(),
     imageBase64:     avatarBase64,
@@ -958,7 +951,6 @@ async function submitForm() {
     const result = await resp.json();
 
     if (result.status === 'success') {
-      // เปลี่ยนเป็น State: Success Transition
       loadingText.innerHTML = "✨ เชื่อมโยงสายสัมพันธ์... สำเร็จ!! ✨";
       btn.innerHTML = "เชื่อมโยงสายสัมพันธ์... สำเร็จ!!";
       
@@ -973,7 +965,7 @@ async function submitForm() {
     }
   } catch (err) {
     loadingOverlay.classList.remove('active');
-    btn.innerHTML = "💌 กดส่งความรัก..และลงทะเบียน"; // รีเซ็ตข้อความปุ่มใหม่
+    btn.innerHTML = "💌 กดส่งความรัก..และลงทะเบียน"; 
     btn.disabled = false;
     alert('❌ เกิดข้อผิดพลาด: ' + err.message + '\nกรุณาลองใหม่อีกครั้ง หรือติดต่อทีมงาน');
   }
@@ -995,7 +987,6 @@ document.querySelectorAll('#interestGrid input').forEach(cb => {
   });
 });
 
-// เคลียร์ Error กล่องติดต่อทันทีที่เริ่มพิมพ์ 1 ใน 3 ช่อง
 ['phone','lineId','email'].forEach(id => {
   document.getElementById(id).addEventListener('input', () => {
     const p = document.getElementById('phone').value.trim();
@@ -1024,7 +1015,6 @@ document.getElementById('sourceChannel').addEventListener('change', function() {
 });
 document.getElementById('sourceOther').addEventListener('input', () => clearErr('sourceOther', 'err-sourceOther'));
 
-// Event สำหรับเปิด/ปิดช่องกรอกชื่อคริสตจักร และล้าง Error เมื่อมีการเลือก
 document.querySelectorAll('input[name="churchStatus"]').forEach(r => {
   r.addEventListener('change', (e) => {
     document.getElementById('err-churchStatus').classList.remove('visible');
