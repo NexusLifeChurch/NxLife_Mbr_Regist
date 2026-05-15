@@ -1,4 +1,4 @@
-<!-- NxLife Registration Form v1.18 (Coffee Tone Theme - Strict Validation & Animations) -->
+<!-- NxLife Registration Form v1.21 (Schema v1.6 & Dynamic Baptism) -->
 <!DOCTYPE html>
 <html lang="th">
 <head>
@@ -599,7 +599,7 @@ input.invalid,textarea.invalid,select.invalid{
     </div>
   </div>
 
-  <!-- ══ SECTION 4: เรื่องราวความเชื่อ ══ -->
+  <!-- ══ SECTION 4: เรื่องราวความเชื่อ (SCHEMA 1.6) ══ -->
   <div class="section-card">
     <div class="section-header">
       <div class="section-icon">✝️</div>
@@ -616,10 +616,32 @@ input.invalid,textarea.invalid,select.invalid{
         <div class="field-error" id="err-believeDate">กรุณากรอกข้อมูลวันที่รับเชื่อ</div>
       </div>
 
+      <!-- บัพติสมา (New logic) -->
       <div class="field-group">
-        <label for="baptismDate">วันที่รับบัพติสมาในน้ำ <span class="opt">(ถ้ามี — ไม่บังคับ)</span></label>
-        <textarea id="baptismDate" rows="2"
-          placeholder="เช่น กุมภาพันธ์ 2021 / ยังไม่ได้รับบัพติสมา"></textarea>
+        <label>เคยรับบัพติสมาในน้ำหรือยัง?<span class="req">*</span></label>
+        <div class="radio-group" style="flex-direction: column; gap: 8px;">
+          <div class="radio-option" style="width: 100%;">
+            <input type="radio" name="isBaptized" id="bapYes" value="เคย"/>
+            <label for="bapYes" style="justify-content: flex-start; padding-left: 16px;">เคยรับแล้ว</label>
+          </div>
+          <div class="radio-option" style="width: 100%;">
+            <input type="radio" name="isBaptized" id="bapNo" value="ไม่เคย"/>
+            <label for="bapNo" style="justify-content: flex-start; padding-left: 16px;">ยังไม่เคย</label>
+          </div>
+          <div class="radio-option" style="width: 100%;">
+            <input type="radio" name="isBaptized" id="bapUnsure" value="ไม่แน่ใจ"/>
+            <label for="bapUnsure" style="justify-content: flex-start; padding-left: 16px;">ไม่แน่ใจ</label>
+          </div>
+        </div>
+        <div class="field-error" id="err-isBaptized">กรุณาเลือกข้อมูลการรับบัพติสมา</div>
+      </div>
+
+      <!-- ช่องพิมพ์ข้อความ จะโชว์เมื่อตอบว่า 'เคย' -->
+      <div class="field-group" id="baptismPeriodGroup" style="display:none; margin-top:-8px;">
+        <label for="baptismPeriod">รับบัพติสมาเมื่อใด? <span class="req">*</span></label>
+        <textarea id="baptismPeriod" rows="2"
+          placeholder="ระบุปี ค.ศ. หรือช่วงเวลาคร่าวๆ เช่น ตอน ป.3, ปี 2020, จำไม่ได้"></textarea>
+        <div class="field-error" id="err-baptismPeriod">กรุณาระบุช่วงเวลาที่รับบัพติสมา</div>
       </div>
       
       <div class="field-group">
@@ -814,6 +836,28 @@ function validateForm() {
       el.classList.remove('invalid'); er && er.classList.remove('visible');
     }
   });
+
+  // 1.5 เช็คการเลือกบัพติสมา และบังคับกรอกช่องพิมพ์ถ้าเลือก "เคย"
+  const isBaptized = document.querySelector('input[name="isBaptized"]:checked');
+  const errIsBaptized = document.getElementById('err-isBaptized');
+  if (!isBaptized) {
+    errIsBaptized.classList.add('visible');
+    ok = false;
+  } else {
+    errIsBaptized.classList.remove('visible');
+    if (isBaptized.value === 'เคย') {
+      const bPeriod = document.getElementById('baptismPeriod');
+      const errBPeriod = document.getElementById('err-baptismPeriod');
+      if (!bPeriod.value.trim()) {
+        bPeriod.classList.add('invalid');
+        errBPeriod.classList.add('visible');
+        ok = false;
+      } else {
+        bPeriod.classList.remove('invalid');
+        errBPeriod.classList.remove('visible');
+      }
+    }
+  }
   
   // 2. เช็คการเลือกสถานะคริสตจักร
   const cStatus = document.querySelector('input[name="churchStatus"]:checked');
@@ -923,6 +967,13 @@ async function submitForm() {
       finalChurch += " (" + churchName + ")";
   }
 
+  // ดึงค่าบัพติสมา
+  let isBaptizedStatus = document.querySelector('input[name="isBaptized"]:checked')?.value || '';
+  let finalBaptismPeriod = "";
+  if (isBaptizedStatus === "เคย") {
+    finalBaptismPeriod = document.getElementById('baptismPeriod').value.trim();
+  }
+
   const payload = {
     firstName: document.getElementById('firstName').value.trim(),
     lastName:  document.getElementById('lastName').value.trim(),
@@ -936,7 +987,11 @@ async function submitForm() {
     shippingAddress: document.getElementById('shippingAddress').value.trim(),
     shippingPhone:   document.getElementById('shippingPhone').value.trim(),
     believeDate:     document.getElementById('believeDate').value.trim(),
-    baptismDate:     document.getElementById('baptismDate').value.trim(),
+    
+    // Schema 1.6: ส่ง 2 ค่าแยกกัน
+    isBaptized:      isBaptizedStatus,
+    baptismPeriod:   finalBaptismPeriod,
+    
     oldChurch:       finalChurch, 
     sourceChannel:   finalSourceChannel,
     interest:        getInterests(),
@@ -972,18 +1027,34 @@ async function submitForm() {
 }
 
 // ── LIVE CLEAR ERRORS ─────────────────────────────────────────
-['firstName','lastName','nickname','birthDate','believeDate', 'shippingAddress', 'shippingPhone'].forEach(id => {
+['firstName','lastName','nickname','birthDate','believeDate', 'shippingAddress', 'shippingPhone', 'baptismPeriod'].forEach(id => {
   const el = document.getElementById(id);
   if (!el) return;
   el.addEventListener('input', () => clearErr(id, 'err-' + id));
   el.addEventListener('change', () => clearErr(id, 'err-' + id));
 });
+
 document.querySelectorAll('input[name="gender"]').forEach(r => {
   r.addEventListener('change', () => document.getElementById('err-gender').classList.remove('visible'));
 });
 document.querySelectorAll('#interestGrid input').forEach(cb => {
   cb.addEventListener('change', () => {
     if (getInterests()) document.getElementById('err-interest').classList.remove('visible');
+  });
+});
+
+// Event ซ่อน/โชว์ ช่องพิมพ์ Baptism Period
+document.querySelectorAll('input[name="isBaptized"]').forEach(r => {
+  r.addEventListener('change', (e) => {
+    document.getElementById('err-isBaptized').classList.remove('visible');
+    const bapGroup = document.getElementById('baptismPeriodGroup');
+    if (e.target.value === 'เคย') {
+      bapGroup.style.display = 'block';
+    } else {
+      bapGroup.style.display = 'none';
+      document.getElementById('baptismPeriod').value = '';
+      clearErr('baptismPeriod', 'err-baptismPeriod');
+    }
   });
 });
 
